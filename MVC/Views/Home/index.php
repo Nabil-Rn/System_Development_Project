@@ -10,17 +10,23 @@
     <title>JUSTBFITNESS</title>
     <link rel="shortcut icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+
 </head>
 <body>
 <header>
     <div class="header-container">
-    <div class="logo-container">
-        <div class="logo-inner-container">
+    <div class="right-box">
         <img class="logo-image" src="assets/logo.png" alt="Logo" />
-        </div>
+        <div class="title-container"> JustBFitness</div>
     </div>
-    <div class="title-container"> JUSTBFITNESS</div>
-    <div class="icon-container"><img class="icon-image" src="assets/profile.png" alt="Icon" /></div>
+    <div class="right-box">
+    <label><a href="Views/Home/register.php">SIGN UP</a></label> <!--- To Modify -->
+    </div>
+    <!---
+    <div class="icon-container"><img class="icon-image" src="../../assets/profile.png" alt="Icon" /></div>
+    -->
     </div>
 </header>
 
@@ -42,28 +48,8 @@
             </div>
         </div>
 </div>
-
 <footer>
-    <div class="left-box">
-        <div class="contact-item">
-            <div class="contact-label">Contact Us | Contactez nous</div>
-            <div class="contact-info">
-                <div class="contact-text"><a href="mailto:enquiries@justbfitness.ca">enquiries@justbfitness.ca</a></div>
-                <div class="contact-text"><a href="tel:+15148628093">(514) 862-8093</a></div>
-            </div>
-            <div class="social-icons">
-                <a href="https://facebook.com"><img src="assets/facebook.png" ></a>
-                <a href="https://instagram.com"><img src="assets/instagram.png"></a>
-            </div>
-        </div>
-    </div>
-    <div class="right-box">
-        <div class="logo-inner-container">
-            <img class="logo-image" src="assets/logo.png" alt="Logo">
-        </div>
-        <div class="copy-rights-text"> &copy; Just B Fitness 2023. All Rights Reserved.</div>
-    </div>
+    <?php include_once 'footer.php' ?>
 </footer>
-
 </body>
 </html>
