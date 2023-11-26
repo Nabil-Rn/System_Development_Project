@@ -30,23 +30,27 @@
     </div>
 </header>
 
-<div class="container">
-        <div class="login">
-            <div class="title">
-                <div class="title-text">Login</div>
-            </div>
-            <div class="content">
+<div class="title">
+    <div class="title-text">Login</div>
+</div>
+
+<div class="all-container">
+            
+            
+            <div class="all-form">
                 <div class="title-large">Login to your Account:</div>
-                <div class="label">Email:</div>
-                <div class="input-box"><input type="email"></div>
-                <div class="label">Password:</div>
-                <div class="input-box"><input type="password"></div>
-                <div class="link"><a href="">Forgot Password?</a></div>
-                <div class="button-container">
-                    <div class="button">Login</div>
+                <div class="form-group">
+                    <div class="label">Email:</div>
+                    <div class="input-box"><input type="email"></div>
+                    <div class="label">Password:</div>
+                    <div class="input-box"><input type="password"></div>
+                    <div class="link"><a href="Views/Auth/forgotPassword.php">Forgot Password?</a></div>
+                    <div class="button-container">
+                        <div class="button">Login</div>
+                </div>
                 </div>
             </div>
-        </div>
+        
 </div>
 <footer>
     <?php include_once 'footer.php' ?>

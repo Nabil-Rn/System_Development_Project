@@ -22,14 +22,17 @@
     </div>
 </header>
 
-<div class="container">
-    <div class="login">
-        <div class="title">
-            <div class="title-text">Sign Up</div>
-        </div>
-        <div class="content">
-            <div class="title-large">Create Your Account:</div>
-           
+<div class="title">
+        <div class="title-text">Sign Up</div>
+</div>
+
+<div class="all-container">
+    
+        
+
+        <div class="all-form">
+            <div class="title-large">Create Your Account: </div>
+               <div class="form-group">        
                 <label><span class="required">*</span>First Name:</label>
                 <div class="input-box"><input type="text" id="fname" required></div>
         
@@ -55,9 +58,11 @@
      
                 <div class="button-container">
                 <div class="button">Sign Up</div>
+
+                </div>
             </div>
         </div>
-    </div>
+    
 </div>
 <footer>
     <div class="left-box">
