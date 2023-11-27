@@ -1,0 +1,313 @@
+.center {
+    padding: 10px;
+    width: 100%;
+    height: auto;
+    padding: 20px 10px 40px 0px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+
+}
+  
+.profile {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      text-align: left;
+}
+  
+.title-header {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: bolder;
+      font-size: 24px;
+      line-height: 1.1; 
+      text-transform: uppercase;
+      color: #000000;
+      padding: 25px;
+      flex: content;
+      text-align: left;  
+      /*margin-right: 910px;*/
+}
+
+table td .title-header .default-button{
+    flex: content;
+    text-align: left;
+}
+    
+  
+    
+.grey-box {
+      width: 70%;
+      height: auto; 
+      background-color: #EEEEEE;
+      display: flex;
+      padding: 10px;
+}
+    
+.grey-label {
+      max-width: 100%;
+      color: #000000;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: bolder;
+      font-size: 12px;
+      line-height: 1.5; 
+      word-wrap: break-word;
+      text-align: left;
+      padding-right: 5px;
+}
+  
+.white-box {
+      width: 70%;
+      height: auto;
+      background-color: white;
+      display: flex;
+      padding: 10px;
+  
+}
+    
+.label-input {
+      max-width: 100%;
+      color: #000000;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 1.5; 
+      word-wrap: break-word;
+      text-align: left;
+}
+    
+.white-box table {
+        width: 100%;
+        height: auto;
+        margin: auto;
+        border-collapse: collapse;
+}
+
+table td .default-button {
+        margin: 30px;
+        padding: 10px;
+
+}
+
+label .label-input {
+    margin: 50px;
+
+}
+
+.default-button {
+        border-color: #AE0B00;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        text-transform: uppercase;
+        width: 100px;
+        display: flex; 
+        justify-content: center; 
+        background: #AE0B00;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bolder;
+        font-size: 14px;
+        line-height: 1.5; 
+        width: 200px;
+        height: auto;
+}
+
+input, input[type="checkbox"], select, option, textarea {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+
+input[type="text"], input[type="password"]{
+    width: 33%;
+    height: auto;
+
+}
+
+input[type="radio"] {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    border-radius: 10px;
+}
+
+input[type="radio"], .label-input label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    border-radius: 10px;
+    margin-left: 10px; 
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+}
+
+.subtext {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.5);
+
+}
+
+.dropdown {
+    position: relative;
+    z-index: 1;
+}
+
+.dropdown-content {
+    margin-top:5px;
+    display: none;
+    position: absolute;
+    background-color: #707070;   
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    
+}
+
+a:hover {
+    background-color: #00000083;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+table th td  {
+    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+th {
+    padding: 20px;
+    box-sizing: border-box;
+    background: #AE0B00;
+    border: 0.5px solid #B9B9B9;
+}
+
+.table-content {
+    padding: 20px;
+    box-sizing: border-box;
+    background: #F6F6F6;
+    border: 0.5px solid #B9B9B9;
+}
+
+th label {
+    padding: 5px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 16px;
+    flex: content;
+    text-align: center;
+    color: #FFFFFF;
+
+}
+
+.table-content label {
+    padding: 5px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    flex: content;
+    text-align: center;
+    color: black;
+
+}
+
+.delete-button{
+    border-color: #DC3545;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    justify-content: center; 
+    background: #DC3545;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 12px;
+    padding: 10px;
+}
+
+
+.update-button{
+    border-color: #35DC50;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    justify-content: center; 
+    background: #35DC50;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 12px;
+    padding: 10px;
+}
+
+.null-box {
+    width: 70%;
+    height: 70%; 
+    background-color: #EEEEEE;
+    display: flex;
+    padding: 10px;
+    
+}
+
+.null-box .grey-label {
+    text-align: center;
+    flex: content;
+    padding: 50px;
+}
+
+.pop-up {
+    max-width: 100%;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    width: 100%; /* Adjust width based on your needs */
+    height: 50px; /* Adjust height based on your needs */
+    position: relative; 
+}
+
+.blackbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(140.22deg, #D90E00 0%, #000000 100%);
+}
+
+.message {
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+}
