@@ -17,13 +17,10 @@
             <div class="title-container"> JustBFitness</div>
         </div>
         <div class="right-box">
-            <label><a href="javascript:window.history.back();">LOGIN</a></label>
+            <label><a href="javascript:window.history.back();">LOGIN</a></label> <!-- CODE TO MODIFY. WE NEED ALTERNATE BETWEEN LOGIN OR REGISTER OR BOTH-->
         </div>
-        <!---
-        <div class="icon-container"><img class="icon-image" src="../../assets/profile.png" alt="Icon" /></div>
-        -->
     </div>
 </header>
-</html>
 
-<!--- USE DASHBOARD.PHP INSIDE HOME FOLDER. DELETE LATER --> 
+</body>
+</html>
