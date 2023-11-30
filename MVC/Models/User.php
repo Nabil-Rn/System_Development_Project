@@ -77,6 +77,24 @@ class User {
         $this->group_id = null;
     }
 
+    public static function login() {
+        global $conn;
+        $sql = "SELECT * FROM user WHERE email = '". $_POST['email'] . "' ";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        if($row['password']==md5($_POST['password'])){
+            $user = new User();
+            $user->email = $row['email'];
+            $user->password = $row['password'];
+            $user->fname = $row['fname'];
+            $user->lname = $row['lname'];
+            $user->group_id = $row['group_id'];
+            $_SESSION['user'] = $user;
+        }else{
+            $_SESSION['alert'] = "Login unsuccessful. Please try again.";
+        }
+    }
+
     public static function list() {
         global $conn;
         $sql = 'SELECT * FROM `user`';

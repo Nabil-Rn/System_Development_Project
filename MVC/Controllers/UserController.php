@@ -6,7 +6,7 @@
 include_once __DIR__ . "/../Models/User.php";
 
 class UserController {
-    
+
 	function route(){
 
 		$controller = $_GET['controller'];
@@ -17,7 +17,16 @@ class UserController {
         // Initialize the User model
         $userModel = new User();
 
-        if ($action == "list") {
+        if ($action == "login") {
+            $users = User::login();
+            //check group ID!
+            if($_SESSION['user']->group_id == 1){
+                $this->render("Client", "index", $users);
+
+            }else if($_SESSION['user']->group_id == 2){
+                $this->render("Admin","index", $users);
+            }
+        } else if ($action == "list") {
             $users = User::$action();
             $this->render("User", $action, $users);
         } else if ($action == "create" || $action == "update" || $action == "delete") {
@@ -28,10 +37,13 @@ class UserController {
         }
     }
 
-    function render($view, $data = []) {
-        extract($data);
-        include "Views/$controller/$view.php"; 
-
+    function render($controller, $view, $data = []) {
+        if($data != null){
+            extract($data);
+            include "Views/$controller/$view.php";
+        }else{
+            include "Views/$controller/$view.php";
+        }
         /*
             include "Views/Client/$view.php"; // Client
             include "Views/Admin/$view.php"; //Admin

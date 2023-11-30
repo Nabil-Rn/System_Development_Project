@@ -35,22 +35,21 @@
 </div>
 
 <div class="all-container">
-            
-            
+    <form action='?controller=user&action=login' method='post' >
             <div class="all-form">
                 <div class="title-large">Login to your Account:</div>
                 <div class="form-group">
                     <div class="label">Email:</div>
-                    <div class="input-box"><input type="email"></div>
+                    <div class="input-box"><input type="email" name="email"></div>
                     <div class="label">Password:</div>
-                    <div class="input-box"><input type="password"></div>
+                    <div class="input-box"><input type="password" name="password"></div>
                     <div class="link"><a href="Views/Auth/forgotPassword.php">Forgot Password?</a></div>
                     <div class="button-container">
-                        <div class="button">Login</div>
+                        <div class="button"><button type="submit">Login</button></div>
                 </div>
                 </div>
             </div>
-        
+        </form>
 </div>
 <footer>
     <?php include_once 'footer.php' ?>
