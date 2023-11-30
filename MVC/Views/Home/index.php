@@ -16,18 +16,24 @@
 </head>
 <body>
 <header>
+    <?php include_once "dashboard.php"; ?>
+    <!--
     <div class="header-container">
     <div class="right-box">
         <img class="logo-image" src="assets/logo.png" alt="Logo" />
         <div class="title-container"> JustBFitness</div>
     </div>
+    
+    
     <div class="right-box">
-    <label><a href="Views/Home/register.php">SIGN UP</a></label> <!--- To Modify -->
+    <label><a href="Views/Home/register.php">SIGN UP</a></label> To Modify
+    
     </div>
-    <!---
+    
     <div class="icon-container"><img class="icon-image" src="../../assets/profile.png" alt="Icon" /></div>
-    -->
     </div>
+    -->
+    
 </header>
 
 <div class="title">

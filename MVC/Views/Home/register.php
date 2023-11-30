@@ -13,6 +13,8 @@
 
 <body>
     <header>
+        <?php include_once "dashboard.php"; ?>
+        <!--
         <div class="header-container">
             <div class="right-box">
                 <img class="logo-image" src="../../assets/logo.png" alt="Logo" />
@@ -22,6 +24,7 @@
                 <label><a href="javascript:window.history.back();">LOGIN</a></label>
             </div>
         </div>
+        -->
     </header>
 
     <div class="title">

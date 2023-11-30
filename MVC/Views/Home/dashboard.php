@@ -17,7 +17,9 @@
             <div class="title-container"> JustBFitness</div>
         </div>
         <div class="right-box">
-            <label><a href="javascript:window.history.back();">LOGIN</a></label> <!-- CODE TO MODIFY. WE NEED ALTERNATE BETWEEN LOGIN OR REGISTER OR BOTH-->
+            <label><a href="index.php">LOGIN</a></label>
+            <label><a href="register.php">SIGN UP</a></label>
+
         </div>
     </div>
 </header>
