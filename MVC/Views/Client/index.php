@@ -73,14 +73,14 @@
                     <div class="contact-text"><a href="tel:+15148628093">(514) 862-8093</a></div>
                 </div>
                 <div class="social-icons">
-                    <a href="https://facebook.com/JustBfitnessOfficial/"><img src="assets/facebook.png"></a>
-                    <a href="https://www.instagram.com/JustBfitness.ca/"><img src="assets/instagram.png"></a>
+                    <a href="https://facebook.com/JustBfitnessOfficial/"><img src="../../assets/facebook.png"></a>
+                    <a href="https://www.instagram.com/JustBfitness.ca/"><img src="../../assets/instagram.png"></a>
                 </div>
             </div>
         </div>
         <div class="right-box">
             <div class="contact-item">
-                <img class="logo-image" src="assets/logo.png" alt="Logo">
+                <img class="logo-image" src="../../assets/logo.png" alt="Logo">
                 <div class="copy-rights-text"> &copy; JUST B FITNESS 2023. ALL RIGHTS RESERVED.</div>
             </div>
         </div>
