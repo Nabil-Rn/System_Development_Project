@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUSTBFITNESS</title>
-    <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="CSS/home.css">
-    <link rel="stylesheet" href="CSS/view.css">
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+    <link rel="stylesheet" href="../../CSS/home.css">
+    <link rel="stylesheet" href="../../CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
@@ -63,8 +63,12 @@
             ?>
         </div>
     </div>
-
+    <?php include_once "../../footer.php"; ?>
+    <!--
     <footer>
+        
+
+
         <div class="left-box">
             <div class="contact-item">
                 <div class="contact-label">Contact Us | Contactez nous</div>
@@ -85,6 +89,7 @@
             </div>
         </div>
     </footer>
+    -->
 </body>
 
 </html>
