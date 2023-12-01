@@ -17,50 +17,55 @@ class User {
     public $additional_note;
     public $group_id;
 
-    public function __construct($id = -1) {
-        global $conn;
-    
+    private $conn;
+
+    public function __construct($conn, $id = -1) {
+        $this->conn = $conn;
+
         if ($id > 0) {
-            // Fetch user details from the database
-            $sql = "SELECT * FROM `user` WHERE user_id = ?";
-            $stmt = $conn->prepare($sql);
-    
-            if (!$stmt) {
-                throw new Exception("Error preparing statement: " . $conn->error);
-            }
-    
-            $stmt->bind_param('i', $id);
-            $stmt->execute();
-            $res = $stmt->get_result();
-    
-            if (!$res) {
-                throw new Exception("Error executing statement: " . $stmt->error);
-            }
-    
-            if ($res->num_rows > 0) {
-                $assocUser = $res->fetch_assoc();
-    
-                $this->user_id = $id;
-                $this->fname = $assocUser['fname'];
-                $this->lname = $assocUser['lname'];
-                $this->email = $assocUser['email'];
-                $this->password = $assocUser['password'];
-                $this->phone = $assocUser['phone'] ?? "Not specified";
-                $this->age = $assocUser['age'] ?? null;
-                $this->gender = $assocUser['gender'] ?? "Not specified";
-                $this->weight = $assocUser['weight'] ?? null;
-                $this->height = $assocUser['height'] ?? null;
-                $this->additional_note = $assocUser['additional_note'] ?? "Not specified";
-                $this->group_id = $assocUser['group_id'];
-    
-                $stmt->close();
-            } else {
-                $this->initializeDefaultValues();
-            }
+            $this->loadUserData($id);
         } else {
             $this->initializeDefaultValues();
         }
     }
+
+    private function loadUserData($id) {
+    // Prepare the SQL statement to fetch user data
+    $stmt = $this->conn->prepare("SELECT * FROM `user` WHERE user_id = ?");
+    if (!$stmt) {
+        throw new Exception("Error preparing statement: " . $this->conn->error);
+    }
+
+    // Bind the user ID parameter and execute the query
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Check if a user was found
+    if ($result->num_rows > 0) {
+        $assocUser = $result->fetch_assoc();
+
+        // Populate the object's properties with the fetched data
+        $this->user_id = $assocUser['user_id'];
+        $this->fname = $assocUser['fname'];
+        $this->lname = $assocUser['lname'];
+        $this->email = $assocUser['email'];
+        $this->password = $assocUser['password']; // This should be a hashed password
+        $this->phone = $assocUser['phone'] ?? "Not specified";
+        $this->age = $assocUser['age'] ?? null;
+        $this->gender = $assocUser['gender'] ?? "Not specified";
+        $this->weight = $assocUser['weight'] ?? null;
+        $this->height = $assocUser['height'] ?? null;
+        $this->additional_note = $assocUser['additional_note'] ?? "Not specified";
+        $this->group_id = $assocUser['group_id'];
+
+        $stmt->close();
+    } else {
+        // If no user is found
+        $this->initializeDefaultValues();
+    }
+}
+
     
     private function initializeDefaultValues() {
         $this->user_id = -1;
@@ -77,22 +82,26 @@ class User {
         $this->group_id = null;
     }
 
-    public static function login() {
-        global $conn;
-        $sql = "SELECT * FROM user WHERE email = '". $_POST['email'] . "' ";
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
-        if($row['password']==md5($_POST['password'])){
-            $user = new User();
-            $user->email = $row['email'];
-            $user->password = $row['password'];
-            $user->fname = $row['fname'];
-            $user->lname = $row['lname'];
-            $user->group_id = $row['group_id'];
-            $_SESSION['user'] = $user;
-        }else{
-            $_SESSION['alert'] = "Login unsuccessful. Please try again.";
+    public function login($email, $password) {
+        $stmt = $this->conn->prepare("SELECT user_id, fname, lname, group_id, password FROM user WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['fname'] = $user['fname'];
+                $_SESSION['lname'] = $user['lname'];
+                $_SESSION['email'] = $email;
+                $_SESSION['group_id'] = $user['group_id'];
+
+                return true;
+            }
         }
+        return false;
     }
 
     public static function list() {
@@ -296,6 +305,26 @@ class User {
         if ($r != NULL) return true;
         else return false;
     }
+
+    //save a new user
+    public function saveUser($fname, $lname, $email, $hashed_password, $phone, $userGroup) {
+        // Prepare an SQL statement to prevent SQL injection
+        $stmt = $this->conn->prepare("INSERT INTO user (first_name, last_name, email, password, phone, user_group) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $fname, $lname, $email, $hashed_password, $phone, $userGroup);
+        
+        // Execute the statement
+        $result = $stmt->execute();
+        if (!$result) {
+        // Handle error appropriately
+        die('Execute failed: ' . $stmt->error);
+    }
+
+        // Close the statement
+        $stmt->close();
+
+        return $result;
+    }
+
 }
 
 ?>

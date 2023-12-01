@@ -1,54 +1,58 @@
 <?php
-
-//*To modify: I'm starting to consider two different controllers for admin and client using the same User Model
-//*Need consult team for this to make sure we're in the same page
-
+session_start();
 include_once __DIR__ . "/../Models/User.php";
 
 class UserController {
+    private $conn;
 
-	function route(){
+    public function __construct() {
+        $this->conn = $this->connectToDatabase();
+    }
 
-		$controller = $_GET['controller'];
-		$action = (isset($_GET['action'])) ? $_GET['action'] : "index";
-		$id = (isset($_GET['id'])) ? intval($_GET['id']) : -1;
+    private function connectToDatabase() {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $database = "justbfitness";
 
+        $conn = new mysqli($servername, $username, $password, $database);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        return $conn;
+    }
 
-        // Initialize the User model
-        $userModel = new User();
+    public function handleLogin() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
 
-        if ($action == "login") {
-            $users = User::login();
-            //check group ID!
-            if($_SESSION['user']->group_id == 1){
-                $this->render("Client", "index", $users);
+            $user = new User($this->conn);
+            $isLoggedIn = $user->login($email, $password);
 
-            }else if($_SESSION['user']->group_id == 2){
-                $this->render("Admin","index", $users);
+            if ($isLoggedIn) {
+                header('Location: ' . $this->getRedirectPage($_SESSION['group_id']));
+                exit;
+            } else {
+                $_SESSION['login_error'] = "Invalid username or password";
+                header('Location: ../Views/Home/index.php');
+                exit;
             }
-        } else if ($action == "list") {
-            $users = User::$action();
-            $this->render("User", $action, $users);
-        } else if ($action == "create" || $action == "update" || $action == "delete") {
-            $result = $userModel->$action();
-        } else {
-            $user = new User($id);
-            $this->render("User", $action, array('user' => $user));
         }
     }
 
-    function render($controller, $view, $data = []) {
-        if($data != null){
-            extract($data);
-            include "Views/$controller/$view.php";
-        }else{
-            include "Views/$controller/$view.php";
+    private function getRedirectPage($group_id) {
+        switch ($group_id) {
+            case 1:
+                return '../Views/Client/index.php';
+            case 2:
+                return '../Views/Admin/index.php';
+            default:
+                return '../Views/Home/index.php';
         }
-        /*
-            include "Views/Client/$view.php"; // Client
-            include "Views/Admin/$view.php"; //Admin
-        */
     }
 }
 
+$controller = new UserController();
+$controller->handleLogin();
 ?>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -13,6 +14,10 @@
 </head>
 
 <body>
+<?php
+session_start();
+
+?>
 
     <header>
         <div class="header-container">
@@ -25,11 +30,12 @@
                 <table>
                     <tr>
                         <td class="dropdown">
+                             
                             <div class="icon-container"><img class="icon-image" src="../../assets/profile.png"
-                                    alt="Icon" /></div>
+                                    alt="Icon" /> </div>
+
                             <div class="dropdown-content">
-                                <a href="index.php?controller=user&action=read&id=<?php echo $user['user_id']; ?>">My
-                                    Profile</a>
+                                <a href="index.php?controller=user&action=read&id=<?php echo $_SESSION['user_id']; ?>">My Profile</a>
                                 <a href="index.php?controller=client&action=exit">Logout</a>
                             </div>
                         </td>

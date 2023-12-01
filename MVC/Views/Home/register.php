@@ -40,27 +40,27 @@
                 <div class="title-large">Create Your Account: </div>
                 <div class="form-group">
                     <label><span class="required">*</span>First Name:</label>
-                    <div class="input-box"><input type="text" id="fname" required></div>
+                    <div class="input-box"><input type="text" name="fname" id="fname" required></div>
 
 
                     <label><span class="required">*</span>Last Name:</label>
-                    <div class="input-box"><input type="text" id="lname" required></div>
+                    <div class="input-box"><input type="text" name="lname" id="lname" required></div>
 
 
                     <label>Phone Number:</label>
-                    <div class="input-box"><input type="phone" id="phone"></div>
+                    <div class="input-box"><input type="phone" name="phone" id="phone"></div>
 
 
                     <label><span class="required">*</span>Email:</label>
-                    <div class="input-box"><input type="email" id="email" required></div>
+                    <div class="input-box"><input type="email" name="email" id="email" required></div>
 
 
                     <label><span class="required">*</span>Password:</label>
-                    <div class="input-box"><input type="password" id="password" required></div>
+                    <div class="input-box"><input type="password" name="password" id="password" required></div>
 
 
                     <label><span class="required">*</span>Re-Enter Password:</label>
-                    <div class="input-box"><input type="password" id="re-password" required></div>
+                    <div class="input-box"><input type="password" name="re-password" id="re-password" required></div>
 
                     <div class="button-container">
                     <input type="submit" class="button" value="Sign Up">

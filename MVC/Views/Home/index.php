@@ -17,38 +17,36 @@
 <body>
 <header>
     <?php include_once "dashboard.php"; ?>
-    <!--
-    <div class="header-container">
-    <div class="right-box">
-        <img class="logo-image" src="assets/logo.png" alt="Logo" />
-        <div class="title-container"> JustBFitness</div>
-    </div>
-    
-    
-    <div class="right-box">
-    <label><a href="Views/Home/register.php">SIGN UP</a></label> To Modify
-    
-    </div>
-    
-    <div class="icon-container"><img class="icon-image" src="../../assets/profile.png" alt="Icon" /></div>
-    </div>
-    -->
+   
     
 </header>
+
 
 <div class="title">
     <div class="title-text">Login</div>
 </div>
 
+<?php
+    if (isset($_SESSION['login_error'])) {
+        echo "<p class='error'>" . $_SESSION['login_error'] . "</p>";
+        unset($_SESSION['login_error']);
+    }
+?>
+
 <div class="all-container">
-    <form action='?controller=user&action=login' method='post' >
+    <form action='../../Controllers/UserController.php' method='post' >
             <div class="all-form">
                 <div class="title-large">Login to your Account:</div>
                 <div class="form-group">
-                    <div class="label">Email:</div>
-                    <div class="input-box"><input type="email" name="email"></div>
-                    <div class="label">Password:</div>
-                    <div class="input-box"><input type="password" name="password"></div>
+                    
+
+                    <label><span class="required">*</span>Email:</label>
+                    <div class="input-box"><input type="email" name="email" id="email" required></div>
+
+
+                    <label><span class="required">*</span>Password:</label>
+                    <div class="input-box"><input type="password" name="password" id="password" required></div>
+
                     <div class="link"><a href="Views/Auth/forgotPassword.php">Forgot Password?</a></div>
                     <div class="button-container">
                         <div class="button"><button type="submit">Login</button></div>

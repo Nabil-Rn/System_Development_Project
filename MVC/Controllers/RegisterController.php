@@ -1,11 +1,16 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+include_once '../Models/User.php';
 
 class RegisterController {
-    private $model;
+    
     private $conn; // Database connection
 
-    public function __construct($model) {
-        $this->model = $model;
+    public function __construct() {
         $this->conn = $this->connectToDatabase(); // Establish the database connection
     }
 
@@ -19,7 +24,7 @@ class RegisterController {
         $conn = new mysqli($servername, $username, $password, $database);
 
         // Check connection
-        if($conn->connect_error) {
+        if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
@@ -31,28 +36,48 @@ class RegisterController {
     }
 
     public function registerUser() {
-        // Check if the form is submitted
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Get form data
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $email = $_POST['email'];
             $password = $_POST['password'];
             $phone = $_POST['phone'];
-            
-            $userGroup = 'Client'; // Set the user group as Client
 
-            $hashed_password = md5($password);
+            $group = '1'; // Assuming '1' is a valid group ID (as an integer)
 
-            $success = $this->model->saveUser($fname, $lname, $email, $hashed_password, $phone, $userGroup);
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            if ($success) {
-                echo "Registration successful. User is now a Client!";
-            } else {
-                echo "Registration failed. Please try again.";
+            if ($hashedPassword === false) {
+                // Password hashing failed
+                $_SESSION['registration_error'] = "Password hashing failed";
+                //header('Location: ../Views/Home/register.php');
+                exit;
             }
+
+            $query = "INSERT INTO USER (FNAME, LNAME, EMAIL, PASSWORD, PHONE, GROUP_ID) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("sssssi", $fname, $lname, $email, $hashedPassword, $phone, $group);
+
+            if ($stmt->execute()) {
+                $_SESSION['registration_success'] = "Registration successful!";
+                header('Location: ../Views/Home/index.php');
+                exit;
+            } else {
+                $_SESSION['registration_error'] = "Error: " . $stmt->error;
+                //header('Location: ../Views/Home/register.php');
+                exit;
+            }
+
+            $stmt->close();
+        } else {
+            //header('Location: ../Views/Home/register.php');
+            exit;
         }
     }
 }
+
+ $controller = new RegisterController();
+ $controller->registerUser();
 
 ?>
