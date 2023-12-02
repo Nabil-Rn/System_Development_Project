@@ -64,7 +64,7 @@ class Booking {
         global $conn;
     
         $groupId = isset($_SESSION['group_id']) ? $_SESSION['group_id'] : null;
-        $groupId = isset($_SESSION['group_id']) ? $_SESSION['group_id'] : null;
+        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     
         if ($groupId == 1) {
             // For Client View For Bookings (group_id = 1)

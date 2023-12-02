@@ -14,11 +14,6 @@
 </head>
 
 <body>
-<?php
-session_start();
-
-?>
-
     <header>
         <div class="header-container">
             <div class="right-box">

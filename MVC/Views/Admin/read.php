@@ -63,48 +63,13 @@ $user = User::read();
                 <div class="label-input"><?php echo str_repeat('*', strlen($user['PASSWORD'])); ?></div> 
             </div>
 
-            <table>
-                    <td>
-                        <form method="post" action="index.php?controller=client&action=delete">
-                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                            <button type="submit" class="default-button" name="delete">Delete Account</button>
-                        </form>
-                    </td>
-                    
-                    <td>
-                        <form method="post" action="index.php?controller=client&action=edit&id=<?php echo $user['user_id']; ?>">
-                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                            <button type="submit" class="default-button" name="edit">Edit Profile</button>
-                        </form>
-                    </td>
-            </table>
-            
-            </div>
+            <form method="post" action="edit.php"> <!--- "index.php?controller=user&action=edit&id=<?php //echo $user['user_id']; ?>"-->
+                <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                 <button type="submit" class="default-button" name="edit" style="padding:10px; margin:10px">Edit Profile</button>
+            </form>
+
         </div>
     </div>
-
-    <footer>
-        <div class="left-box">
-            <div class="contact-item">
-                <div class="contact-label">Contact Us | Contactez nous</div>
-                <div class="contact-info">
-                    <div class="contact-text"><a href="mailto:enquiries@justbfitness.ca">enquiries@justbfitness.ca</a></div>
-                    <div class="contact-text"><a href="tel:+15148628093">(514) 862-8093</a></div>
-                </div>
-                <div class="social-icons">
-                    <a href="https://facebook.com/JustBfitnessOfficial/"><img src="../../assets/facebook.png" ></a>
-                    <a href="https://www.instagram.com/JustBfitness.ca/"><img src="../../assets/instagram.png"></a>
-                </div>
-            </div>
-        </div>
-        <div class="right-box">
-            <div class="contact-item">
-                <img class="logo-image" src="../../assets/logo.png" alt="Logo">
-                <div class="copy-rights-text"> &copy; JUST B FITNESS 2023. ALL RIGHTS RESERVED.</div>
-            </div>
-        </div>
-    </footer>
-
+        <?php include_once "../../footer.php"; ?>
 </body>
-
 </html>
