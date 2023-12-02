@@ -15,12 +15,6 @@ $user = User::read();
     <link rel="stylesheet" href="../../CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
-    <script>
-        function showDeleteModal() {
-            document.getElementById('deleteMessage').innerText = "Are you sure you want to delete your account?";
-            document.getElementById('modalOverlay').style.display = 'flex';
-        }
-    </script>
 </head>
 
 <body>
@@ -115,7 +109,7 @@ $user = User::read();
 
             <table>
                 <td>
-                    <button class="default-button" onclick="showDeleteModal()">Delete Account</button>
+                    <button class="default-button" name="confirm-delete" id="confirmDeleteButton">Delete Account</button>
                 </td>
 
                 <td>
@@ -124,20 +118,59 @@ $user = User::read();
                         <button type="submit" class="default-button" name="edit">Edit Profile</button>
                     </form>
                 </td>
+
+            </table>
+    
+        </div>
+    </div>
+    <div class="pop-up"> <div class="blackbar"><p class="message">Your account has been successfully deleted.</p></div></div>
+    <!-- Footer -->
+    <?php include_once "../../footer.php"; ?>
+
+
+<!-- Modal Structure -->
+<div id="modalOverlay" style="display: none;" onclick="closeModal()">
+    <div id="deleteModalContainer" onclick="event.stopPropagation();">
+        <div id="deleteModal">
+            <p id="deleteTitle">Confirm delete</p>
+            <p id="deleteSubtitle">Are you sure you want to delete your account?</p>
+            <p id="deleteText">This action is irreversible and cannot be undone.</p>
+            <table>
+                <tr>
+                    <td>
+                        <form method="post" action="../Home/index.php">
+                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                            <button type="submit" class="confirm-button" name="delete">Yes</button>
+                        </form>
+                    </td>
+                    <td>
+                        <button class="confirm-button" id="popupCloseButton">No</button>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
+</div>
 
-    <div id="modalOverlay">
-        <div id="deleteModal">
-            <p id="deleteMessage">Are you sure you want to delete?</p>
-            <form method="post" action="index.php?controller=client&action=delete">
-                <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                <button type="submit" class="default-button" name="delete">Yes</button>
-            </form>
-            <button onclick="document.getElementById('modalOverlay').style.display = 'none'">No</button>
-        </div>
-    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+            showDeleteModal();
+        });
+
+        document.getElementById('popupCloseButton').addEventListener('click', function () {
+            closeModal();
+        });
+    });
+
+    function showDeleteModal() {
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+</script>
+
 </body>
-
 </html>
