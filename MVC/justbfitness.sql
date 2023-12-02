@@ -317,13 +317,16 @@ INSERT INTO `timeslots` (`timeslot_start`, `timeslot_end`, `is_available`, `avai
 ('22:30:00', '23:30:00', 1, 1);
 
 
--- Sample data for the 'booking' table based on the provided timeslots
+-- Sample data for the 'booking' table based on the provided timeslots (only clients!!!)
 INSERT INTO `booking` (`booking_date`, `appointment_date`, `timeslot_id`, `user_id`) VALUES
-(NOW(), '2023-11-20', 1, 1),
-(NOW(), '2023-11-21', 4, 1),
-(NOW(), '2023-11-20', 6, 1),
-(NOW(), '2023-11-25', 10, 1),
-(NOW(), '2023-11-30', 13, 1);
+(NOW(), '2023-11-20', 1, 6),
+(NOW(), '2023-11-21', 4, 6),
+(NOW(), '2023-11-20', 6, 7),
+(NOW(), '2023-11-25', 10, 7),
+(NOW(), '2023-12-08', 13, 9),
+(NOW(), '2023-12-21', 13, 9),
+(NOW(), '2023-12-31', 13, 10);
+
 
 
 COMMIT;

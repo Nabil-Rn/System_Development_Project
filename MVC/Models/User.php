@@ -13,7 +13,9 @@ class User {
     public $age;
     public $gender;
     public $weight;
+    public $weight_unit;
     public $height;
+    public $height_unit;
     public $additional_note;
     public $group_id;
 
@@ -55,7 +57,9 @@ class User {
         $this->age = $assocUser['age'] ?? null;
         $this->gender = $assocUser['gender'] ?? "Not specified";
         $this->weight = $assocUser['weight'] ?? null;
+        $this->weight_unit = $assocUser['weight_unit'] ?? "Not specified"; 
         $this->height = $assocUser['height'] ?? null;
+        $this->height_unit = $assocUser['height_unit'] ?? "Not specified"; 
         $this->additional_note = $assocUser['additional_note'] ?? "Not specified";
         $this->group_id = $assocUser['group_id'];
 
@@ -77,7 +81,9 @@ class User {
         $this->age = null;
         $this->gender = "Not specified";
         $this->weight = null;
+        $this->weight_unit = "Not specified";
         $this->height = null;
+        $this->height_unit = "Not specified";
         $this->additional_note = "Not specified";
         $this->group_id = null;
     }
@@ -104,57 +110,72 @@ class User {
         return false;
     }
 
+    // This is for Client List
     public static function list() {
         global $conn;
-        $sql = 'SELECT * FROM `user`';
+
+        $sql = $sql = 'SELECT 
+        USER_ID,
+        GROUP_ID,
+        FNAME,
+        LNAME,
+        EMAIL,
+        PHONE
+    FROM 
+        USER
+    WHERE 
+        GROUP_ID <> 2';
+    
+
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        // Check if fetch_all is available
+        if (method_exists($result, 'fetch_all')) {
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+        // If fetch_all is not available, fetch row by row
+            $data = array();
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+        }
+        // Close the statement
         $stmt->close();
-        return $result->fetch_all(MYSQLI_ASSOC);
+
+        return $data;
     }
 
+
+    // For My Profile 
     public static function read() {
         global $conn;
     
-        if (isset($_POST['read'])) {
-            // Get user_id from the POST data
-            $userId = isset($_POST['user_id']) ? $_POST['user_id'] : null;
+        // Check if user ID is present in the session
+        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     
-            // Validate $userId (ensure it's a positive integer, for example)
+        $sql = "SELECT * FROM `USER` WHERE USER_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $userId);
     
-            // Prepare and execute the SQL query
-            $sql = 'SELECT * FROM USER 
-                    WHERE USER_ID = ?';
+        $stmt->execute();
+        $result = $stmt->get_result();
     
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('i', $userId);
-            $stmt->execute();
-            $result = $stmt->get_result();
-    
-            // Fetch the result
-            $data = $result->fetch_assoc();
-    
-            // Return the fetched data
-            return $data;
-        }
-    
-        // Return false if no data is fetched
-        return false;
+        // Return the fetched result
+        return $result->fetch_assoc();
     }
-    
 
+    // View Client Details as an Admin
     public static function view() {
         global $conn;
-    
-        if (isset($_POST['view'])) {
-            // Get user_id from the POST data
-            $userId = isset($_POST['user_id']) ? $_POST['user_id'] : null;
-    
-            // Validate $userId (ensure it's a positive integer, for example)
-    
+
+        $userId = isset($_POST['user_id']) ? $_POST['user_id'] : null;
+
+        if (isset($_POST['view']) && isset($_POST['user_id']) && is_numeric($_POST['user_id']) && $_POST['user_id'] > 0) {
             // Prepare and execute the SQL query
             $sql = 'SELECT 
+                USER_ID,
                 FNAME,
                 LNAME,
                 EMAIL,
@@ -162,29 +183,34 @@ class User {
                 AGE,
                 GENDER,
                 WEIGHT,
+                WEIGHT_UNIT, 
                 HEIGHT,
+                HEIGHT_UNIT, 
                 ADDITIONAL_NOTE
             FROM 
                 USER
             WHERE 
-                USER_ID = ?';
-    
+                USER_ID = ? AND
+                GROUP_ID <> 2';  // Exclude admins
+
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('i', $userId);
             $stmt->execute();
             $result = $stmt->get_result();
-    
+
             // Fetch the result
             $data = $result->fetch_assoc();
-    
+
             // Return the fetched data
             return $data;
         }
-    
+
         // Return false if no data is fetched
         return false;
     }
+
     
+    // To modify later
     public static function create() {
         global $conn;
 
@@ -222,6 +248,7 @@ class User {
         return false;
     }
 
+    // To modify later
     public static function update() {
         global $conn;
 
@@ -254,6 +281,7 @@ class User {
         return false;
     }
 
+    // To modify later
     public static function delete() {
         global $conn;
 
@@ -306,7 +334,7 @@ class User {
         else return false;
     }
 
-    //save a new user
+    // Save a new user
     public function saveUser($fname, $lname, $email, $hashed_password, $phone, $userGroup) {
         // Prepare an SQL statement to prevent SQL injection
         $stmt = $this->conn->prepare("INSERT INTO user (first_name, last_name, email, password, phone, user_group) VALUES (?, ?, ?, ?, ?, ?)");

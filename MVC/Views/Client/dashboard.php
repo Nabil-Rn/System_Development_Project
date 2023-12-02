@@ -35,8 +35,8 @@ session_start();
                                     alt="Icon" /> </div>
 
                             <div class="dropdown-content">
-                                <a href="index.php?controller=user&action=read&id=<?php echo $_SESSION['user_id']; ?>">My Profile</a>
-                                <a href="index.php?controller=client&action=exit">Logout</a>
+                                <a href="read.php">My Profile</a> <!--- index.php?controller=user&action=read&id=<?php //echo $_SESSION['user_id']; ?> -->
+                                <a href="exit.php">Logout</a> <!-- will change later according to our MVC: index.php?controller=home&action=exit -->
                             </div>
                         </td>
                     </tr>

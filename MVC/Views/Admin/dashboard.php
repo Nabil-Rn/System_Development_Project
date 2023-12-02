@@ -27,8 +27,7 @@
                             <div class="icon-container"><img class="icon-image" src="../../assets/profile.png"
                                     alt="Icon" /></div>
                             <div class="dropdown-content">
-                                <a href="index.php?controller=user&action=read&id=<?php echo $user['user_id']; ?>">My
-                                    Profile</a>
+                                <a href="read.php">My Profile</a>  <!-- index.php?controller=user&action=read&id=<?php //echo $user['user_id']; ?> -->
                                 <a href="index.php?controller=client&action=exit">Logout</a>
                             </div>
                         </td>
@@ -40,7 +39,7 @@
     <nav class="nav-menu">
         <ul>
             <li><a href="index.php">My Service</a></li>
-            <li><a href="index.php?controller=user&action=list">Client List</a></li>
+            <li><a href="client_list.php">Client List</a></li> <!-- fix: index.php?controller=user&action=list -->
         </ul>
     </nav>
 </body>

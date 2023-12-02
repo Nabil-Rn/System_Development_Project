@@ -278,17 +278,17 @@ th {
 }
 
 .table-content {
-    padding: 20px;
+    padding: auto;
     box-sizing: border-box;
     background: #F6F6F6;
     border: 0.5px solid #B9B9B9;
 }
 
 th label {
-    padding: 5px 20px;
+    padding: 5px 10px;
     font-family: 'Montserrat', sans-serif;
     font-weight: bolder;
-    font-size: 16px;
+    font-size: 14px;
     flex: content;
     text-align: center;
     color: #FFFFFF;
@@ -296,10 +296,10 @@ th label {
 }
 
 .table-content label {
-    padding: 5px 20px;
+    padding: 5px 10px;
     font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: bolder;
+    font-size: 14px;
     flex: content;
     text-align: center;
     color: black;
@@ -427,6 +427,8 @@ ul {
 
 form {
     display: flex;
+    flex-direction: column;
+    margin: 10px;
 }
 
 input[type="search"] {
@@ -456,6 +458,23 @@ input[type="search"] {
     padding: 5px 15px 5px 15px;
 }
 
+.search-button{
+    box-sizing: border-box;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background: #AE0B00;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 5px 15px 5px 15px;
+}
+
 .grey-round-box1 {
     flex-grow: 1;
     background-color: #EEEEEE;
@@ -463,10 +482,20 @@ input[type="search"] {
     padding: 8px 20px 8px 20px;
     margin: 10px 0 10px 0;
     border-radius: 20px;
+    max-width: 100%;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 14px;
+    line-height: 1.5; 
+    word-wrap: break-word;
+    text-align: left;
 }
 
-.grey-round-box1 td,.grey-round-box2 td {
-padding: 0 40px 0 40px;
+.grey-round-box1 td,.grey-round-box2 td, .view-button td {
+    padding: 5px 70px 5px 70px;
+    width: 100%;
+    text-align: justify;
 
 }
 
@@ -477,6 +506,14 @@ padding: 0 40px 0 40px;
     padding: 8px 20px 8px 20px;
     margin: 10px 0 10px 0;
     border-radius: 20px; 
+    max-width: 100%;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 14px;
+    line-height: 1.5; 
+    word-wrap: break-word;
+    text-align: left;
 }
 
 .container {
@@ -490,4 +527,3 @@ padding: 0 40px 0 40px;
     border-radius: 12px;
     padding: 20px; 
 }
-

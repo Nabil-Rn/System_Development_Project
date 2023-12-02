@@ -43,44 +43,6 @@ $user = User::read();
             </div>
 
             <div class="grey-box">
-                <div class="grey-label">Age</div> 
-            </div>
-            <div class="white-box">
-                <div class="label-input"><?php echo isset($data['AGE']) ? htmlspecialchars($data['AGE']) : 'Not specified.'; ?></div>
-            </div>
-
-            <div class="grey-box">
-                <div class="grey-label">Gender</div> 
-            </div>
-            <div class="white-box">
-                <div class="label-input"><?php echo isset($data['GENDER']) ? htmlspecialchars($data['GENDER']) : 'Not specified.'; ?></div>
-            </div>
-
-            <div class="grey-box">
-                <div class="grey-label">Weight</div> 
-            </div>
-            <div class="white-box">
-                <div class="label-input">
-                <?php 
-                    echo isset($data['WEIGHT']) ? htmlspecialchars($data['WEIGHT']) : 'Not specified.'; 
-                    echo isset($data['WEIGHT_UNIT']) ? ' ' . htmlspecialchars($data['WEIGHT_UNIT']) : ''; 
-                ?>
-                </div>
-            </div>
-
-            <div class="grey-box">
-                <div class="grey-label">Height</div> 
-            </div>
-            <div class="white-box">
-                <div class="label-input">
-                <?php 
-                    echo isset($data['HEIGHT']) ? htmlspecialchars($data['HEIGHT']) : 'Not specified.'; 
-                    echo isset($data['HEIGHT_UNIT']) ? ' ' . htmlspecialchars($data['HEIGHT_UNIT']) : ''; 
-                ?>
-                </div>
-            </div>
-
-            <div class="grey-box">
                 <div class="grey-label">Email</div> 
             </div>
             <div class="white-box">
@@ -91,24 +53,14 @@ $user = User::read();
                 <div class="grey-label">Phone Number</div> 
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo isset($data['PHONE']) ? htmlspecialchars($data['PHONE']) : 'Not specified.'; ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($user['PHONE']); ?></div> 
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Password</div> 
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo $user->password; ?></div> 
-            </div>
-
-            <div class="grey-box">
-                <table>
-                    <td><label class="grey-label">Additional Note</label></td>
-                    <td><p class="subtext">[Share any relevant information about your medical conditions, injuries, allergies, meds, past fitness, and goals]</p></td>
-                </table> 
-            </div>
-            <div class="white-box">
-                <div class="label-input"><?php echo isset($data['ADDITIONAL_NOTE']) ? htmlspecialchars($data['ADDITIONAL_NOTE']) : 'Not specified.'; ?></div>
+                <div class="label-input"><?php echo str_repeat('*', strlen($user['PASSWORD'])); ?></div> 
             </div>
 
             <table>
@@ -156,4 +108,3 @@ $user = User::read();
 </body>
 
 </html>
-
