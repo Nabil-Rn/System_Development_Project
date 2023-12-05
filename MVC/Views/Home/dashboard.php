@@ -18,7 +18,7 @@
         </div>
         <div class="right-box">
             <label><a href="index.php">LOGIN</a></label>
-            <label><a href="register.php">SIGN UP</a></label>
+            <label><a href="Views/Home/register.php">SIGN UP</a></label>
 
         </div>
     </div>

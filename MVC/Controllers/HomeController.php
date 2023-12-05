@@ -4,7 +4,7 @@ include_once "Models/Client.php";
 
 class HomeController{
 
-	function route(){
+	function index(){
             $this->render("index");
 
 	}

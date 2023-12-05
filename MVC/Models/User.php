@@ -87,7 +87,7 @@ class User {
         $this->additional_note = "Not specified";
         $this->group_id = null;
     }
-
+    /*
     public function login($email, $password) {
         $stmt = $this->conn->prepare("SELECT user_id, fname, lname, group_id, password FROM user WHERE email = ?");
         $stmt->bind_param("s", $email);
@@ -109,6 +109,46 @@ class User {
         }
         return false;
     }
+    */
+    
+
+    public function register($fname, $lname, $email, $password, $group_id) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = 'INSERT INTO user (fname, lname, email, password, group_id) VALUES (?, ?, ?, ?, ?)';
+        $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            die('Error preparing statement: ' . $this->conn->error);
+        }
+
+        $stmt->bind_param('ssssi', $fname, $lname, $email, $hashed_password, $group_id);
+        $stmt->execute();
+
+        if ($stmt->error) {
+            die('Error executing statement: ' . $stmt->error);
+        }
+
+        $stmt->close();
+        return $this->conn->insert_id;
+    }
+
+    public function login($email, $password) {
+    $stmt = $this->conn->prepare("SELECT * FROM user WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        if (password_verify($password, $user['password'])) {
+            return $user;
+        }
+    }
+    return false;
+}
+
+
 
     // This is for Client List
     public static function list() {
@@ -211,6 +251,7 @@ class User {
 
     
     // To modify later
+    
     public static function create() {
         global $conn;
 
