@@ -24,10 +24,10 @@
                 <table>
                     <tr>
                         <td class="dropdown">
-                            <div class="icon-container"><img class="icon-image" src="../../assets/profile.png"
-                                    alt="Icon" /></div>
+                            <div class="icon-container"><img class="icon-image" src="../../assets/profile.png" alt="Icon" /></div>
                             <div class="dropdown-content">
-                                <a href="read.php">My Profile</a>  <!-- index.php?controller=user&action=read&id=<?php //echo $user['user_id']; ?> -->
+                                <a href="read.php">My Profile</a> <!-- index.php?controller=user&action=read&id=<?php //echo $user['user_id']; 
+                                                                                                                ?> -->
                                 <a href="index.php?controller=client&action=exit">Logout</a>
                             </div>
                         </td>

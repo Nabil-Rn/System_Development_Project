@@ -9,7 +9,7 @@ $data = User::list();
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="../../CSS/admin.css">
@@ -20,33 +20,33 @@ $data = User::list();
 </head>
 
 <body>
-</head>
+    </head>
 
-<body>
-    <?php include_once "dashboard.php"; ?>
-    <div class="center">
-        <div class="profile">
-            <table>
-                <tr>
-                    <td>
-                        <input type="search" placeholder="Search...">
-                    </td>
-                    <td>
-                        <button type="submit" class="search-button" name="search">Search</button> 
-                    </td>
-                </tr>
-            </table>
+    <body>
+        <?php include_once "dashboard.php"; ?>
+        <div class="center">
+            <div class="profile">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="search" placeholder="Search...">
+                        </td>
+                        <td>
+                            <button type="submit" class="search-button" name="search">Search</button>
+                        </td>
+                    </tr>
+                </table>
 
-            <?php
-            if (isset($data) && is_array($data) && !empty($data)) {
-            ?>
-                <div class="container1">
-                    <table>
-                        <tr>
-                        <?php
-                        foreach ($data as $iteration => $user) {
-                            $boxClass = $iteration % 2 === 1 ? 'grey-round-box1' : 'grey-round-box2';
-                            ?>
+                <?php
+                if (isset($data) && is_array($data) && !empty($data)) {
+                ?>
+                    <div class="container1">
+                        <table>
+                            <tr>
+                                <?php
+                                foreach ($data as $iteration => $user) {
+                                    $boxClass = $iteration % 2 === 1 ? 'grey-round-box1' : 'grey-round-box2';
+                                ?>
                             <tr class="<?php echo $boxClass; ?>">
                                 <td><?php echo htmlspecialchars($user['FNAME']); ?></td>
                                 <td><?php echo htmlspecialchars($user['LNAME']); ?></td>
@@ -59,23 +59,23 @@ $data = User::list();
                                         <button type="submit" class="view-button" name="view">View</button>
                                     </form>
                                 </td>
-                                </tr> 
+                            </tr>
                         <?php
-                        }
+                                }
                         ?>
-                        
-                    </table>
-                </div>
-            <?php
-            } else {
-                echo '<div class="null-box"><div class="grey-label">No client records were found.</div></div>';
-            }
-            ?>
+
+                        </table>
+                    </div>
+                <?php
+                } else {
+                    echo '<div class="null-box"><div class="grey-label">No client records were found.</div></div>';
+                }
+                ?>
+            </div>
         </div>
-    </div>
-    <footer>
-        <?php include dirname(__FILE__) . "/../../footer.php"; ?>
-    </footer>
-</body>
+        <footer>
+            <?php include dirname(__FILE__) . "/../../footer.php"; ?>
+        </footer>
+    </body>
 
 </html>

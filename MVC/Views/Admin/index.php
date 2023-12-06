@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <script src="https://schedule.nylas.com/schedule-editor/v1.0/schedule-editor.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -21,9 +22,30 @@
                 <table>
                     <tr>
                         <td>
-                            <form method="post" action="modify_availability.php">
-                                <button type="submit" class="default-button" name="modify">Modify Availability</button>
-                            </form>
+                            <button type="submit" class="default-button" name="modify" id="schedule-editor">Modify Schedule</button>
+
+                            <script>
+                                var btn = document.getElementById('schedule-editor');
+                                btn.addEventListener('click', function() {
+                                    nylas.scheduler.show({
+                                        auth: {
+                                            // Account <ACCESS_TOKEN> with active calendar scope
+                                            accessToken: "PTcBVppDmBLQOqQxIGUFnWXwA4bcAb",
+                                        },
+                                        style: {
+                                            // Style the schdule editor
+                                            tintColor: '#32325d',
+                                            backgroundColor: 'white',
+                                        },
+                                        defaults: {
+                                            event: {
+                                                title: '30-min Coffee Meeting',
+                                                duration: 30,
+                                            },
+                                        },
+                                    });
+                                });
+                            </script>
                         </td>
                         <td>
                             <form method="post" action="view_appointments.php">
@@ -33,27 +55,27 @@
                     </tr>
                 </table>
             </div>
-        
-            <div class="admin-calendar-placeholder">
-                <!-- Placeholder for the Google Calendar API shown in Figma -->
-                <p>Google Calendar will go here</p>
 
-                <!-- Google Calendar API Library (Searched online from Google to attempt to set this up) -->
-                <script src="https://apis.google.com/js/api.js"></script>
+            <div id="target">
 
-                <script>
-                    // Load the Google APIs Client Library and initialize the Calendar API
-                    gapi.load('client', function() {
-                        gapi.client.init({
-                            apiKey: 'YOUR_API_KEY',
-                            discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-                        }).then(function() {
-                            // Google Calendar API is loaded and ready to be used
-                            // You can call gapi.client.calendar.[API_METHODS] here
-                        });
-                    });
-                </script>
             </div>
+
+            <script>
+                // Get reference to the target div
+                const targetDiv = document.getElementById('target');
+
+                // Create an iframe element
+                const iframe = document.createElement('iframe');
+
+                // Set attributes for the iframe
+                iframe.src = 'https://schedule.nylas.com/justbfitness-booking';
+                iframe.width = '10000px'; // Set width as needed
+                iframe.height = '1000px'; // Set height as needed
+                iframe.frameBorder = '0'; // Optional: remove border
+
+                // Append the iframe to the target div
+                targetDiv.appendChild(iframe);
+            </script>
         </div>
     </div>
     <footer>

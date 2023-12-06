@@ -17,7 +17,7 @@
 
 <body>
     <?php include_once "dashboard.php"; ?>
-    
+
     <form method="post" action="index.php?controller=client&action=update">
         <input type="hidden" name="user_id" value="<?php echo "test" ?>">
 
@@ -27,7 +27,7 @@
 
                 <!-- First Name -->
                 <div class="grey-box">
-                    <div class="grey-label">First Name</div> 
+                    <div class="grey-label">First Name</div>
                 </div>
                 <div class="white-box">
                     <input type="text" class="form-control" id="fname" name="fname" autocomplete="off" value="<?php echo $user['FNAME']; ?>" required>
@@ -35,7 +35,7 @@
 
                 <!-- Last Name -->
                 <div class="grey-box">
-                    <div class="grey-label">Last Name</div> 
+                    <div class="grey-label">Last Name</div>
                 </div>
                 <div class="white-box">
                     <input type="text" class="form-control" id="lname" name="lname" autocomplete="off" value="<?php echo $user['LNAME']; ?>" required>
@@ -43,7 +43,7 @@
 
                 <!-- Email -->
                 <div class="grey-box">
-                    <div class="grey-label">Email</div> 
+                    <div class="grey-label">Email</div>
                 </div>
                 <div class="white-box">
                     <input type="text" class="form-control" id="email" name="email" autocomplete="off" value="<?php echo $user['EMAIL']; ?>" required>
@@ -51,7 +51,7 @@
 
                 <!-- Phone Number -->
                 <div class="grey-box">
-                    <div class="grey-label">Phone Number</div> 
+                    <div class="grey-label">Phone Number</div>
                 </div>
                 <div class="white-box">
                     <input type="text" class="form-control" id="phone" name="phone" autocomplete="off" value="<?php echo $user['PHONE']; ?>">
@@ -59,7 +59,7 @@
 
                 <!-- Password -->
                 <div class="grey-box">
-                    <div class="grey-label">Password</div> 
+                    <div class="grey-label">Password</div>
                 </div>
                 <div class="white-box">
                     <input type="password" class="form-control" id="password" name="password" autocomplete="off" value="<?php echo $user['PASSWORD']; ?>" required>
@@ -70,7 +70,7 @@
                     <td>
                         <button type="submit" class="default-button" onclick="window.history.back();">Back</button>
                     </td>
-                    
+
                     <td>
                         <button type="submit" class="default-button" name="update">Save Changes</button>
                     </td>
@@ -78,6 +78,7 @@
             </div>
         </div>
     </form>
-        <?php include_once "../../footer.php"; ?>
+    <?php include_once "../../footer.php"; ?>
 </body>
+
 </html>

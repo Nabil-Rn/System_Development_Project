@@ -3,7 +3,7 @@ include "../../Models/User.php";
 $user = User::view();
 
 if ($user) {
-    ?>
+?>
     <!-- VIEW DETAILS OF CLIENT INFO: This file name is intended to be renamed "view.php", for href="index.php?controller=user&action=view&id=?" -->
     <!DOCTYPE html>
     <html lang="en">
@@ -33,7 +33,7 @@ if ($user) {
                 <div class="white-box">
                     <div class="label-input"><?php echo htmlspecialchars($user['FNAME']); ?></div>
                 </div>
-                 
+
                 <!-- Last Name  -->
                 <div class="grey-box">
                     <div class="grey-label">Last Name</div>
@@ -64,9 +64,9 @@ if ($user) {
                 </div>
                 <div class="white-box">
                     <div class="label-input">
-                        <?php 
-                            echo isset($data['WEIGHT']) ? htmlspecialchars($data['WEIGHT']) : 'Not specified.'; 
-                            echo isset($data['WEIGHT_UNIT']) ? ' ' . htmlspecialchars($data['WEIGHT_UNIT']) : ''; 
+                        <?php
+                        echo isset($data['WEIGHT']) ? htmlspecialchars($data['WEIGHT']) : 'Not specified.';
+                        echo isset($data['WEIGHT_UNIT']) ? ' ' . htmlspecialchars($data['WEIGHT_UNIT']) : '';
                         ?>
                     </div>
                 </div>
@@ -76,10 +76,10 @@ if ($user) {
                     <div class="grey-label">Height</div>
                 </div>
                 <div class="white-box">
-                    <div class="label-input"> 
-                        <?php 
-                            echo isset($data['HEIGHT']) ? htmlspecialchars($data['HEIGHT']) : 'Not specified.'; 
-                            echo isset($data['HEIGHT_UNIT']) ? ' ' . htmlspecialchars($data['HEIGHT_UNIT']) : ''; 
+                    <div class="label-input">
+                        <?php
+                        echo isset($data['HEIGHT']) ? htmlspecialchars($data['HEIGHT']) : 'Not specified.';
+                        echo isset($data['HEIGHT_UNIT']) ? ' ' . htmlspecialchars($data['HEIGHT_UNIT']) : '';
                         ?>
                     </div>
                 </div>
@@ -135,7 +135,7 @@ if ($user) {
     </body>
 
     </html>
-    <?php
+<?php
 } else {
     // Handle the case where no user data is fetched
     echo '<div class="null-box"><div class="grey-label">No user data found.</div></div>';
