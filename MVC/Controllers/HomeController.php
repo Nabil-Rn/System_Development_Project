@@ -1,7 +1,5 @@
 <?php
 
-include_once "Models/Client.php";
-
 class HomeController{
 
 	function route(){

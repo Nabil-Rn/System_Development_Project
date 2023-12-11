@@ -23,7 +23,7 @@
     <div class="all-container">
 
         <div class="all-form">
-            <form action="?controller=user&action=signup" method="post">
+            <form action="?controller=user&action=register" method="post"> 
                 <div class="title-large">Create Your Account: </div>
                 <div class="form-group">
                     <label><span class="required">*</span>First Name:</label>

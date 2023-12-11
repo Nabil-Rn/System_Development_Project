@@ -28,7 +28,7 @@
                             <div class="dropdown-content">
                                 <a href="read.php">My Profile</a> <!-- index.php?controller=user&action=read&id=<?php //echo $user['user_id']; 
                                                                                                                 ?> -->
-                                <a href="?controller=client&action=exit">Logout</a>
+                                <a href="?controller=user&action=logout">Logout</a>
                             </div>
                         </td>
                     </tr>

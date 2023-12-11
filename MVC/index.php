@@ -8,7 +8,7 @@ $id = (isset($_GET['id'])) ? intval($_GET['id']) : -1;
 $controllerClassName = ucfirst($controller) . "Controller";
 include_once "Controllers/$controllerClassName.php";
 
-
+session_start();
 $ct = new $controllerClassName();
 $ct->route();
 

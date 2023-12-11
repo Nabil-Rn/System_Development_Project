@@ -3,6 +3,10 @@
 include_once "mysqldatabase.php";
 
 class Booking {
+    // Set your Nylas Scheduler API credentials and endpoint
+    $accessToken = 'YOUR_ACCESS_TOKEN';
+    $schedulerId = 'YOUR_SCHEDULER_ID';
+    $apiUrl = "https://api.nylas.com/schedule/$schedulerId/bookings";
 
     public $booking_id;
     public $booking_date;
@@ -122,6 +126,68 @@ class Booking {
 
     // Additional methods related to booking operations can be added here
 
+    public function getAPIjson(){
+        // Set your Nylas Scheduler API credentials and endpoint
+        $accessToken = 'PTcBVppDmBLQOqQxIGUFnWXwA4bcAb';
+        $schedulerId = '';
+        $apiUrl = "https://api.nylas.com/schedule/$schedulerId/bookings";
+        // Set up cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $accessToken,
+            'Content-Type: application/json',
+        ]);
+
+        // Make the API call to retrieve booking information
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($httpCode === 200) {
+            // Successfully fetched data
+            $bookings = json_decode($response, true);
+
+            // Process and work with the $bookings array
+            global $conn;
+            foreach ($bookings as $booking) {
+                // Process $booking data and construct your SQL query for insertion
+                $startTime = $booking['start_time'];
+                $endTime = $booking['end_time'];
+                $startTime = $booking['start_time'];
+                $endTime = $booking['end_time'];
+                $bookingId = $booking['id'];
+                $status = $booking['status'];
+                    // Access other fields as needed...
+               
+                // ... extract other necessary fields
+                
+                // Example SQL INSERT query
+                $sql = "INSERT INTO bookings_table (start_time, end_time, other_field) VALUES ('$startTime', '$endTime', 'other_value')";
+                
+                // Execute the query
+                if ($mysqli->query($sql) === TRUE) {
+                    echo "New record created successfully";
+                } else {
+                    echo "Error: " . $sql . "<br>" . $mysqli->error;
+                }
+            }
+            
+            $mysqli->close();
+        } else {
+            // Error handling if the API call fails
+            echo "Failed to retrieve bookings. HTTP code: $httpCode";
+        }
+
+        // Close cURL session
+        curl_close($ch);
+
+    }
+
+
 }
 
+
 ?>
+
+
+

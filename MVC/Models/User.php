@@ -21,8 +21,8 @@ class User {
 
     private $conn;
 
-    public function __construct($conn, $id = -1) {
-        $this->conn = $conn;
+    public function __construct($id = -1) {
+        global $conn;
 
         if ($id > 0) {
             $this->loadUserData($id);
@@ -87,68 +87,47 @@ class User {
         $this->additional_note = "Not specified";
         $this->group_id = null;
     }
-    /*
-    public function login($email, $password) {
-        $stmt = $this->conn->prepare("SELECT user_id, fname, lname, group_id, password FROM user WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-
-            if (password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['fname'] = $user['fname'];
-                $_SESSION['lname'] = $user['lname'];
-                $_SESSION['email'] = $email;
-                $_SESSION['group_id'] = $user['group_id'];
-
-                return true;
-            }
-        }
-        return false;
-    }
-    */
-    
-
-    public function register($fname, $lname, $email, $password, $group_id) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = 'INSERT INTO user (fname, lname, email, password, group_id) VALUES (?, ?, ?, ?, ?)';
-        $stmt = $this->conn->prepare($sql);
-
-        if (!$stmt) {
-            die('Error preparing statement: ' . $this->conn->error);
-        }
-
-        $stmt->bind_param('ssssi', $fname, $lname, $email, $hashed_password, $group_id);
-        $stmt->execute();
-
-        if ($stmt->error) {
-            die('Error executing statement: ' . $stmt->error);
-        }
-
-        $stmt->close();
-        return $this->conn->insert_id;
-    }
-
-    public function login($email, $password) {
-    $stmt = $this->conn->prepare("SELECT * FROM user WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-
-        if (password_verify($password, $user['password'])) {
-            return $user;
+    public static function login() {
+        global $conn;
+        $sql = "SELECT * FROM user WHERE email = '". $_POST['email'] . "' ";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        
+        if(password_verify($_POST['password'], $row['password'])){ 
+            $user = new User();
+            $user->user_id = $row['user_id'];
+            $user->email = $row['email'];
+            $user->password = $row['password'];
+            $user->fname = $row['fname'];
+            $user->lname = $row['lname'];
+            $user->group_id = $row['group_id'];
+            $_SESSION['user'] = $user;
+        }else{
+            $_SESSION['alert'] = "Login unsuccessful. Please try again.";
         }
     }
-    return false;
-}
 
+  
+    // public function register($fname, $lname, $email, $password, $group_id) {
+    //     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    //     $sql = 'INSERT INTO user (fname, lname, email, password, group_id) VALUES (?, ?, ?, ?, ?)';
+    //     $stmt = $this->conn->prepare($sql);
 
+    //     if (!$stmt) {
+    //         die('Error preparing statement: ' . $this->conn->error);
+    //     }
+
+    //     $stmt->bind_param('ssssi', $fname, $lname, $email, $hashed_password, $group_id);
+    //     $stmt->execute();
+
+    //     if ($stmt->error) {
+    //         die('Error executing statement: ' . $stmt->error);
+    //     }
+
+    //     $stmt->close();
+    //     return $this->conn->insert_id;
+    // }
 
     // This is for Client List
     public static function list() {
@@ -249,7 +228,7 @@ class User {
         return false;
     }
 
-    //                                             different register
+    // different register
     // public static function register() {
     //     global $conn;
 
@@ -318,6 +297,14 @@ class User {
             }
         }
         return false;
+    }
+
+    public static function logout() {
+        // Unset all session variables
+        session_unset();
+
+        // Destroy the session
+        session_destroy();
     }
 
     // To modify later
@@ -395,3 +382,5 @@ class User {
 }
 
 ?>
+
+
