@@ -1,7 +1,7 @@
 <!--- VIEW APPOINTMENTS SHOULD BE HERE SO FOR NOW I'M COPYING AND PASTING IT HERE. AGAIN, DUE TO API IMPLEMENTATION IT WILL NEED REVISION -->
 <!--- a href="index.php?controller=booking&action=list" shoud lead to HERE --> 
 <?php
-include "../../Models/Booking.php";
+include "Models/Booking.php";
 $data = Booking::list();
 ?>
 
@@ -11,8 +11,8 @@ $data = Booking::list();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/home.css">
-    <link rel="stylesheet" href="../../CSS/view.css">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="shortcut icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
@@ -60,7 +60,7 @@ $data = Booking::list();
                             <td class="table-content"><label>' . $booking['APPOINTMENT_DATE'] . '</label></td>
                             <td class="table-content"><label>' . $booking['SESSION_TIME'] . '</label></td>
                             <td class="table-content">
-                                <form method="post" action="index.php?controller=booking&action=edit&id=' . $booking['BOOKING_ID'] . '">
+                                <form method="post" action="?controller=booking&action=edit&id=' . $booking['BOOKING_ID'] . '">
                                     <input type="hidden" name="booking_id" value="' . $booking['BOOKING_ID'] . '">
                                     <button type="submit" class="update-button" name="update">Update</button>
                                 </form>
@@ -82,7 +82,7 @@ $data = Booking::list();
     </div>
 
     <footer>
-        <?php include_once "../../footer.php"; ?>
+        <?php include_once "footer.php"; ?>
     </footer>
 
 </body>

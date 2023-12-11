@@ -8,9 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUSTBFITNESS</title>
-    <link rel="shortcut icon" href="../../assets/favicon.ico">
-    <link rel="stylesheet" href="../../CSS/home.css">
-    <link rel="stylesheet" href="../../CSS/view.css">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
@@ -18,7 +18,7 @@
 <body>
     <?php include_once "dashboard.php"; ?>
 
-    <form method="post" action="index.php?controller=client&action=update">
+    <form method="post" action="?controller=client&action=update">
         <input type="hidden" name="user_id" value="<?php echo "test" ?>">
 
         <div class="center">
@@ -78,7 +78,7 @@
             </div>
         </div>
     </form>
-    <?php include_once "../../footer.php"; ?>
+    <?php include_once "footer.php"; ?>
 </body>
 
 </html>

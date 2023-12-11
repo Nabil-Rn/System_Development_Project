@@ -1,5 +1,5 @@
 <?php
-include "../../Models/Booking.php";
+include "Models/Booking.php";
 $data = Booking::list();
 
 session_start();
@@ -21,9 +21,9 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUSTBFITNESS</title>
-    <link rel="shortcut icon" href="../../assets/favicon.ico">
-    <link rel="stylesheet" href="../../CSS/home.css">
-    <link rel="stylesheet" href="../../CSS/view.css">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
@@ -38,7 +38,7 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="title-header">MY BOOKINGS</div>
                     </td>
                     <td>
-                        <form method="post" action="index.php?controller=booking&action=create">
+                        <form method="post" action="?controller=booking&action=create">
                             <button type="submit" class="default-button" name="book">Book Now</button>
                         </form>
                     </td>
@@ -82,7 +82,7 @@ if (isset($data) && is_array($data) && !empty($data)) {
             ?>
         </div>
     </div>  
-    <?php include_once "../../footer.php"; ?>
+    <?php include_once "footer.php"; ?>
 </body>
 
 </html>

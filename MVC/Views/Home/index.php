@@ -26,7 +26,7 @@
     ?>
 
     <div class="all-container">
-        <form action='Controllers/UserController.php' method='post'>
+        <form action='?controller=user&action=login' method='post'>
             <input type="hidden" name="action" value="login">
             <div class="all-form">
                 <div class="title-large">Login to your Account:</div>

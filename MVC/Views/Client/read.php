@@ -1,5 +1,5 @@
 <?php
-include "../../Models/User.php";
+include "Models/User.php";
 $user = User::read();
 ?>
 
@@ -11,8 +11,8 @@ $user = User::read();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUSTBFITNESS</title>
     <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="../../CSS/home.css">
-    <link rel="stylesheet" href="../../CSS/view.css">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
@@ -125,7 +125,7 @@ $user = User::read();
     </div>
     <div class="pop-up"> <div class="blackbar"><p class="message">Your account has been successfully deleted.</p></div></div>
     <!-- Footer -->
-    <?php include_once "../../footer.php"; ?>
+    <?php include_once "footer.php"; ?>
 
 
 <!-- Modal Structure -->
@@ -138,7 +138,7 @@ $user = User::read();
             <table>
                 <tr>
                     <td>
-                        <form method="post" action="../Home/index.php">
+                        <form method="post" action="?controller=&action=">
                             <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
                             <button type="submit" class="confirm-button" name="delete">Yes</button>
                         </form>

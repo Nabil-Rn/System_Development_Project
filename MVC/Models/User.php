@@ -1,6 +1,6 @@
 <?php
 
-    include_once dirname(__DIR__) . "/mysqldatabase.php";
+    include_once "mysqldatabase.php";
 
 class User {
 
@@ -70,7 +70,7 @@ class User {
     }
 }
 
-    
+
     private function initializeDefaultValues() {
         $this->user_id = -1;
         $this->fname = "";
@@ -249,13 +249,10 @@ class User {
         return false;
     }
 
-    
-    // To modify later
-    
-    public static function create() {
+    public static function signup() {
         global $conn;
 
-        if (isset($_POST['create'])) {
+        if (isset($_POST['signup'])) {
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $email = $_POST['email'];

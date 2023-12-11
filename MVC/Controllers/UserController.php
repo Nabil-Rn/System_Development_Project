@@ -1,108 +1,48 @@
 <?php
-session_start();
-include_once __DIR__ . "/../Models/User.php";
+include_once  "Models/User.php";
 
 class UserController {
-    private $userModel;
 
-    public function __construct() {
-        global $conn;
-        $this->userModel = new User($conn);
-    }
+	function route(){
 
-    public function handleLogin() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+		$controller = $_GET['controller'];
+		$action = (isset($_GET['action'])) ? $_GET['action'] : "index";
+		$id = (isset($_GET['id'])) ? intval($_GET['id']) : -1;
 
-            $user = $this->userModel->login($email, $password);
 
-            if ($user) {
-                $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['group_id'] = $user['group_id'];
-                header('Location: ' . $this->getRedirectPage($_SESSION['group_id']));
-                exit;
-            } else {
-                $_SESSION['login_error'] = "Invalid username or password";
-                header('Location: ../Views/Home/index.php');
-                exit;
+        // Initialize the User model
+        $userModel = new User();
+
+        if ($action == "login") {
+            $users = User::login();
+            //check group ID!
+            if($_SESSION['user']->group_id == 1){
+                $this->render("Client", "index", $users);
+
+            }else if($_SESSION['user']->group_id == 2){
+                $this->render("Admin","index", $users);
             }
-        }
-    }
-    
-    
-    private function connectToDatabase() {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "justbfitness";
 
-        $conn = new mysqli($servername, $username, $password, $database);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        return $conn;
-    }
+        } else if ($action == "list") {
+            $users = User::$action();
+            $this->render("User", $action, $users);
 
-    
-
-    private function getRedirectPage($group_id) {
-        switch ($group_id) {
-            case 1:
-                return '../Views/Client/index.php';
-            case 2:
-                return '../Views/Admin/index.php';
-            default:
-                return '../Views/Home/index.php';
-        }
-    }
-
-    public function logout() {
-        // Unset all session variables
-        $_SESSION = array();
-
-        // Destroy the session
-        session_destroy();
-
-        // Redirect to the login page
-        //change location to take you to the login page
-        header('Location: login.php');
-        exit;
-    }
-
-    public function register($fname, $lname, $email, $password, $group_id) {
-        // Additional validation can be added here
-        $userId = $this->model->register($fname, $lname, $email, $password, $group_id);
-
-        if ($userId) {
-            header("Location: index.php?controller=user&action=read&id=$userId");
-            exit();
+        } else if ($action == "signup" || $action == "update" || $action == "delete") {
+            $result = $userModel->$action();
         } else {
-            // Handle registration failure
+            $user = new User($id);
+            $this->render("User", $action, array('user' => $user));
         }
     }
 
-    public function login($email, $password) {
-        $user = $this->model->login($email, $password);
-        if ($user) {
-            // Set session variables
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];
-            // Redirect to a different page or do something else upon successful login
-            return true;
-        } else {
-            // Handle login failure
-            return false;
+    function render($controller, $view, $data = []) {
+        if($data != null){
+            extract($data);
+            include "Views/$controller/$view.php";
+        }else{
+            include "Views/$controller/$view.php";
         }
     }
 }
-/*
 
-$controller->handleLogin();
-*/
-$controller = new UserController();
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
-    $controller->handleLogin();
-}
 ?>

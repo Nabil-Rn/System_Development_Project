@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUSTBFITNESS</title>
     <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="../../CSS/home.css">
-    <link rel="stylesheet" href="../../CSS/view.css">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
@@ -17,7 +17,7 @@
 <header>
     <div class="header-container">
         <div class="right-box">
-            <img class="logo-image" src="../../assets/logo.png" alt="Logo" />
+            <img class="logo-image" src="assets/logo.png" alt="Logo" />
             <div class="title-container"> JustBFitness</div>
         </div>
 
@@ -25,10 +25,10 @@
             <table>
                 <tr>
                     <td class="dropdown">
-                        <div class="icon-container"><img class="icon-image" src="../../assets/profile.png" alt="Icon" /></div>
+                        <div class="icon-container"><img class="icon-image" src="assets/profile.png" alt="Icon" /></div>
                         <div class="dropdown-content">
-                            <a href="index.php?controller=user&action=read&id=<?php echo $user['user_id']; ?>">My Profile</a>
-                            <a href="index.php?controller=client&action=exit">Logout</a>
+                            <a href="?controller=user&action=read&id=<?php echo $user['user_id']; ?>">My Profile</a>
+                            <a href="?controller=client&action=exit">Logout</a>
                         </div>
                     </td>
                 </tr>
@@ -38,7 +38,7 @@
 </header>
 <nav class="nav-menu">
     <ul>
-        <li><a href="index.php?controller=booking&action=list">My Bookings</a></li>
+        <li><a href="?controller=booking&action=list">My Bookings</a></li>
     </ul>
 </nav>
 
@@ -101,7 +101,7 @@
     </div>
     <div class="right-box">
         <div class="contact-item">
-            <img class="logo-image" src="../../assets/logo.png" alt="Logo">
+            <img class="logo-image" src="assets/logo.png" alt="Logo">
             <div class="copy-rights-text"> &copy; JUST B FITNESS 2023. ALL RIGHTS RESERVED.</div>
         </div>
     </div>

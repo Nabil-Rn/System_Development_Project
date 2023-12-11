@@ -8,17 +8,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUSTBFITNESS</title>
-    <link rel="shortcut icon" href="../../assets/favicon.ico">
-    <link rel="stylesheet" href="../../CSS/home.css">
-    <link rel="stylesheet" href="../../CSS/view.css">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
 
 <body>
     <?php include_once "dashboard.php"; ?>
-    
-    <form method="post" action="index.php?controller=client&action=update">
+
+    <form method="post" action="?controller=client&action=update">
         <input type="hidden" name="user_id" value="<?php echo "test" ?>">
 
         <div class="center">
@@ -27,7 +27,7 @@
 
                 <!-- First Name -->
                 <div class="grey-box">
-                    <div class="grey-label">First Name</div> 
+                    <div class="grey-label">First Name</div>
                 </div>
                 <div class="white-box">
                     <input type="text" class="form-control" id="fname" name="fname" autocomplete="off" value="<?php echo $user['FNAME']; ?>" required>
@@ -35,7 +35,7 @@
 
                 <!-- Last Name -->
                 <div class="grey-box">
-                    <div class="grey-label">Last Name</div> 
+                    <div class="grey-label">Last Name</div>
                 </div>
                 <div class="white-box">
                     <input type="text" class="form-control" id="lname" name="lname" autocomplete="off" value="<?php echo $user['LNAME']; ?>" required>
@@ -43,7 +43,7 @@
 
                 <!-- Age -->
                 <div class="grey-box">
-                    <div class="grey-label">Age</div> 
+                    <div class="grey-label">Age</div>
                 </div>
                 <div class="white-box">
                     <input type="text" class="form-control" id="age" name="age" autocomplete="off" value="<?php echo $user['AGE']; ?>">
@@ -51,7 +51,7 @@
 
                 <!-- Gender -->
                 <div class="grey-box">
-                    <div class="grey-label">Gender</div> 
+                    <div class="grey-label">Gender</div>
                 </div>
                 <div class="white-box">
                     <!-- NEED TO RETRIEVE CHECKED ANSWER TO UPDATE THIS VALUE -->
@@ -132,7 +132,7 @@
                     <td>
                         <button type="submit" class="default-button" onclick="window.history.back();">Back</button>
                     </td>
-                    
+
                     <td>
                         <button type="submit" class="default-button" name="update">Save Changes</button>
                     </td>
@@ -143,7 +143,7 @@
 
     <!-- Footer -->
     <footer>
-        <?php include_once "../../footer.php"; ?>
+        <?php include_once "footer.php"; ?>
     </footer>
 </body>
 

@@ -79,7 +79,7 @@
         </div>
     </div>
     <footer>
-        <?php include dirname(__FILE__) . "/../../footer.php"; ?>
+        <?php include "footer.php"; ?>
     </footer>
 
 </body>

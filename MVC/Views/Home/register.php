@@ -36,7 +36,7 @@
 
 
         <div class="all-form">
-            <form action="../../Controllers/RegisterController.php" method="post">
+            <form action="?controller=user&action=signup" method="post">
                 <div class="title-large">Create Your Account: </div>
                 <div class="form-group">
                     <label><span class="required">*</span>First Name:</label>

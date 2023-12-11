@@ -1,6 +1,6 @@
 <?php
 // To remove once we fix the User Controller
-include "../../Models/User.php";
+include "Models/User.php";
 $data = User::list();
 ?>
 
@@ -12,8 +12,8 @@ $data = User::list();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="../../CSS/admin.css">
-    <link rel="stylesheet" href="../../CSS/view.css">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
@@ -74,7 +74,7 @@ $data = User::list();
             </div>
         </div>
         <footer>
-            <?php include dirname(__FILE__) . "/../../footer.php"; ?>
+            <?php include "footer.php"; ?>
         </footer>
     </body>
 

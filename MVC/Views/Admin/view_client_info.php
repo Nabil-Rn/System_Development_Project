@@ -1,5 +1,5 @@
 <?php
-include "../../Models/User.php";
+include "Models/User.php";
 $user = User::view();
 
 if ($user) {
@@ -12,8 +12,8 @@ if ($user) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="assets/favicon.ico">
-        <link rel="stylesheet" href="../../CSS/home.css">
-        <link rel="stylesheet" href="../../CSS/view.css">
+        <link rel="stylesheet" href="CSS/home.css">
+        <link rel="stylesheet" href="CSS/view.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
     </head>
@@ -119,7 +119,7 @@ if ($user) {
                 <!-- Add the delete button at the end -->
                 <table>
                     <td>
-                        <form method="post" action="index.php?controller=client&action=delete">
+                        <form method="post" action="?controller=client&action=delete">
                             <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['USER_ID']); ?>">
                             <button type="submit" class="default-button" name="delete">Delete</button>
                         </form>
@@ -130,7 +130,7 @@ if ($user) {
         </div>
 
         <footer>
-            <?php include dirname(__FILE__) . "/../../footer.php"; ?>
+            <?php include "footer.php"; ?>
         </footer>
     </body>
 

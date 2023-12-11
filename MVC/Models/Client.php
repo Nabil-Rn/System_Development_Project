@@ -1,9 +1,5 @@
-
 <?php
-
-//FOR REFERENCE. DELETE LATER.
-
-    include_once dirname(__DIR__) . "/mysqldatabase.php";
+    include_once  "mysqldatabase.php";
 
 class Client{
 
