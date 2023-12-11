@@ -37,7 +37,7 @@
                     <label><span class="required">*</span>Password:</label>
                     <div class="input-box"><input type="password" name="password" id="password" required></div>
 
-                    <div class="link"><a href="Views/Auth/forgotPassword.php">Forgot Password?</a></div>
+                    <div class="link"><a href="?controller=home&action=forgotPassword">Forgot Password?</a></div>
                     <div class="button-container">
                         <div class="button"><button type="submit">Login</button></div>
                     </div>

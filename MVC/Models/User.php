@@ -249,42 +249,43 @@ class User {
         return false;
     }
 
-    public static function signup() {
-        global $conn;
+    //                                             different register
+    // public static function register() {
+    //     global $conn;
 
-        if (isset($_POST['signup'])) {
-            $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $group_id = $_POST['group_id'];
+    //     if (isset($_POST['register'])) {
+    //         $fname = $_POST['fname'];
+    //         $lname = $_POST['lname'];
+    //         $email = $_POST['email'];
+    //         $password = $_POST['password'];
+    //         $group_id = $_POST['group_id'];
 
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    //         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $sql = 'INSERT INTO `user` (fname, lname, email, password, group_id) VALUES (?, ?, ?, ?, ?)';
-            $stmt = $conn->prepare($sql);
+    //         $sql = 'INSERT INTO `user` (fname, lname, email, password, group_id) VALUES (?, ?, ?, ?, ?)';
+    //         $stmt = $conn->prepare($sql);
 
-            if (!$stmt) {
-                die('Error preparing statement: ' . $conn->error);
-            }
+    //         if (!$stmt) {
+    //             die('Error preparing statement: ' . $conn->error);
+    //         }
 
-            $stmt->bind_param('ssssi', $fname, $lname, $email, $hashed_password, $group_id);
-            $stmt->execute();
+    //         $stmt->bind_param('ssssi', $fname, $lname, $email, $hashed_password, $group_id);
+    //         $stmt->execute();
 
-            if ($stmt->error) {
-                die('Error executing statement: ' . $stmt->error);
-            }
+    //         if ($stmt->error) {
+    //             die('Error executing statement: ' . $stmt->error);
+    //         }
 
-            $insertedUserId = $stmt->insert_id;
+    //         $insertedUserId = $stmt->insert_id;
 
-            $stmt->close();
+    //         $stmt->close();
 
-            header("Location: index.php?controller=user&action=read&id=$user_id");
-            exit();
-        }
+    //         header("Location: index.php?controller=user&action=read&id=$user_id");
+    //         exit();
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     // To modify later
     public static function update() {

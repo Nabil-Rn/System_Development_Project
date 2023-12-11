@@ -43,6 +43,10 @@ header {
   padding-right: 15px;
 }
 
+.right-box:hover {
+  cursor: pointer;
+}
+
 .logo-image {
   width: 55px;
   height: 40px;

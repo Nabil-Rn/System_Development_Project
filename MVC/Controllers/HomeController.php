@@ -4,11 +4,13 @@ include_once "Models/Client.php";
 
 class HomeController{
 
-	function index(){
-            $this->render("index");
+	function route(){
 
+        $action = (isset($_GET['action'])) ? $_GET['action'] : "index";
+        $this->render($action);
 	}
-    function render($view, $data = []) {
+
+    function render($view) {
 
         include "Views/Home/$view.php";
     }

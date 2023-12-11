@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="CSS/home.css">
 </head>
 <body>
-    <?php include_once "navbar.php"; ?>
+<header>
+    <?php include_once "dashboard.php"; ?>
+</header>
+
     <div class="title">
         <div class="title-text">
             Forgot Password
@@ -33,6 +36,8 @@
         </div>
     </div>
 
-    <?php include_once "footer.php"; ?>
+    <footer>
+        <?php include_once 'footer.php' ?>
+    </footer>
 </body>
 </html>

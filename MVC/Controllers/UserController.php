@@ -27,7 +27,7 @@ class UserController {
             $users = User::$action();
             $this->render("User", $action, $users);
 
-        } else if ($action == "signup" || $action == "update" || $action == "delete") {
+        } else if ($action == "register" || $action == "update" || $action == "delete") {
             $result = $userModel->$action();
         } else {
             $user = new User($id);
