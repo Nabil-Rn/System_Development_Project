@@ -109,25 +109,44 @@ class User {
     }
 
   
-    // public function register($fname, $lname, $email, $password, $group_id) {
-    //     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    //     $sql = 'INSERT INTO user (fname, lname, email, password, group_id) VALUES (?, ?, ?, ?, ?)';
-    //     $stmt = $this->conn->prepare($sql);
+    public function register($firstName, $lastName, $phone, $email, $password, $confirmPassword, $groupId = 1) {
+        global $conn;
+        // Validate input data
+        if (empty($firstName) || empty($lastName) || empty($phone) || empty($email) || empty($password)) {
+            return "All fields are required.";
+        }
 
-    //     if (!$stmt) {
-    //         die('Error preparing statement: ' . $this->conn->error);
-    //     }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return "Invalid email format.";
+        }
 
-    //     $stmt->bind_param('ssssi', $fname, $lname, $email, $hashed_password, $group_id);
-    //     $stmt->execute();
+        if ($password !== $confirmPassword) {
+            return "Passwords do not match.";
+        }
 
-    //     if ($stmt->error) {
-    //         die('Error executing statement: ' . $stmt->error);
-    //     }
+        // Hash password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    //     $stmt->close();
-    //     return $this->conn->insert_id;
-    // }
+        // Prepare database query
+        $query = 'INSERT INTO user (fname, lname, phone, email, password, group_id) VALUES (?, ?, ?, ?, ?, ?)';
+
+        if ($stmt = $conn->prepare($query)) {
+            // Bind parameters
+            $stmt->bind_param("sssssi", $firstName, $lastName, $phone, $email, $hashedPassword, $groupId);
+
+            // Execute query and check for successful insertion
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                // Handle errors, e.g., duplicate entry
+                return "An error occurred: " . $stmt->error;
+            }
+        } else {
+            // Handle preparation error
+            return "An error occurred during query preparation: " . $conn->error;
+        }
+    }
+    
 
     // This is for Client List
     public static function list() {
@@ -228,44 +247,7 @@ class User {
         return false;
     }
 
-    // different register
-    // public static function register() {
-    //     global $conn;
-
-    //     if (isset($_POST['register'])) {
-    //         $fname = $_POST['fname'];
-    //         $lname = $_POST['lname'];
-    //         $email = $_POST['email'];
-    //         $password = $_POST['password'];
-    //         $group_id = $_POST['group_id'];
-
-    //         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    //         $sql = 'INSERT INTO `user` (fname, lname, email, password, group_id) VALUES (?, ?, ?, ?, ?)';
-    //         $stmt = $conn->prepare($sql);
-
-    //         if (!$stmt) {
-    //             die('Error preparing statement: ' . $conn->error);
-    //         }
-
-    //         $stmt->bind_param('ssssi', $fname, $lname, $email, $hashed_password, $group_id);
-    //         $stmt->execute();
-
-    //         if ($stmt->error) {
-    //             die('Error executing statement: ' . $stmt->error);
-    //         }
-
-    //         $insertedUserId = $stmt->insert_id;
-
-    //         $stmt->close();
-
-    //         header("Location: index.php?controller=user&action=read&id=$user_id");
-    //         exit();
-    //     }
-
-    //     return false;
-    // }
-
+    
     // To modify later
     public static function update() {
         global $conn;

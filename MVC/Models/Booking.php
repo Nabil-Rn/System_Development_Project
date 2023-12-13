@@ -4,9 +4,9 @@ include_once "mysqldatabase.php";
 
 class Booking {
     // Set your Nylas Scheduler API credentials and endpoint
-    $accessToken = 'YOUR_ACCESS_TOKEN';
-    $schedulerId = 'YOUR_SCHEDULER_ID';
-    $apiUrl = "https://api.nylas.com/schedule/$schedulerId/bookings";
+    //$accessToken = 'YOUR_ACCESS_TOKEN';
+    //$schedulerId = 'YOUR_SCHEDULER_ID';
+    //$apiUrl = "https://api.nylas.com/schedule/$schedulerId/bookings";
 
     public $booking_id;
     public $booking_date;

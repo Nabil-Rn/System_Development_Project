@@ -1,16 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\MVC",
-    "\\MVC\\assets",
-    "\\MVC\\Controllers",
-    "\\MVC\\CSS",
-    "\\MVC\\Models",
-    "\\MVC\\Views",
-    "\\MVC\\Views\\Admin",
-    "\\MVC\\Views\\Auth",
-    "\\MVC\\Views\\Client"
+    ""
   ],
-  "SelectedNode": "\\MVC\\justbfitness.sql",
+  "SelectedNode": "\\C:\\xampp\\htdocs\\sys_dev",
   "PreviewInSolutionExplorer": false
 }

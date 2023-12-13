@@ -1,16 +1,20 @@
 <?php
-include "Models/Booking.php";
-$data = Booking::list();
+/*
 
 session_start();
+
 if (!isset($_SESSION['user_id'])) {
     // Not logged in, redirect to login page
     //change to controller
     header('Location: ../Home/index.php');
     exit;
+}else {
+	include "Models/Booking.php";
+    $data = Booking::list();
 }
 
 
+*/
 ?>
 
 

@@ -23,6 +23,31 @@ class UserController {
 
         } else if ($action == "register") {
             // testing
+            // Handle registration process
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Collect user input data
+                $firstName = $_POST['fname'];
+                $lastName = $_POST['lname'];
+                $phoneNumber = $_POST['phone'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $confirmPassword = $_POST['re-password'];
+
+                // Validate input data and register user
+                $result = $userModel->register($firstName, $lastName, $phoneNumber, $email, $password, $confirmPassword);
+                if ($result === true) {
+                    // Registration successful
+                    //$this->render("User", "index");
+                    header("Location: ?controller=home");
+                    //header("Location: ?controller=user&action=login"); // Redirect to login page
+                } else {
+                    // Registration failed, show error
+                    $this->render("User", "register", array('error' => $result));
+                }
+            } else {
+                // Show registration form
+                $this->render("User", "register");
+            }
 
         } else if ($action == "list") {
             $users = User::$action();
@@ -64,6 +89,7 @@ class UserController {
                 $this->render("Admin","index");
             }
         }else{
+            //not logged in
             header("Location: ?controller=home");
         }
     }
