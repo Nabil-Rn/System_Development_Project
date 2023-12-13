@@ -24,7 +24,19 @@
 
         <div class="all-form">
             <form action="?controller=user&action=register" method="post"> 
+
+            
+                <?php
+                    // Display error message if it exists in the data array
+                    if (isset($data['error'])) {
+                        $errorMessage = $data['error'];
+                        echo '<div style="color: red;">' . $errorMessage . '</div>';
+                    }
+                ?>
+
                 <div class="title-large">Create Your Account: </div>
+                
+
                 <div class="form-group">
                     <label><span class="required">*</span>First Name:</label>
                     <div class="input-box"><input type="text" name="fname" id="fname" required></div>
@@ -48,6 +60,8 @@
 
                     <label><span class="required">*</span>Re-Enter Password:</label>
                     <div class="input-box"><input type="password" name="re-password" id="re-password" required></div>
+
+                    
 
                     <div class="button-container">
                     <input type="submit" class="button" value="Sign Up">

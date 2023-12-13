@@ -37,12 +37,14 @@ class UserController {
                 $result = $userModel->register($firstName, $lastName, $phoneNumber, $email, $password, $confirmPassword);
                 if ($result === true) {
                     // Registration successful
-                    //$this->render("User", "index");
+                    // Redirect to login page
                     header("Location: ?controller=home");
-                    //header("Location: ?controller=user&action=login"); // Redirect to login page
+                    
                 } else {
-                    // Registration failed, show error
-                    $this->render("User", "register", array('error' => $result));
+                    // Registration failed
+                     $this->render("User", "register");
+                     //show error
+                    //$this->render("User", "register", array('error' => $result));
                 }
             } else {
                 // Show registration form

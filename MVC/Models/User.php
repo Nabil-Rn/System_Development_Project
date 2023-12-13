@@ -113,15 +113,28 @@ class User {
         global $conn;
         // Validate input data
         if (empty($firstName) || empty($lastName) || empty($phone) || empty($email) || empty($password)) {
-            return "All fields are required.";
+            $error_message ="All fields are required.";
+            $this->render("Home", "register", array('error' => $error_message));
+            
+            exit();
+            //"All fields are required.";
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return "Invalid email format.";
+            $error_message ="Invalid email format.";
+            $this->render("Home", "register", array('error' => $error_message));
+            
+            exit();
+            //"Invalid email format.";
         }
 
         if ($password !== $confirmPassword) {
-            return "Passwords do not match.";
+            $error_message =  "Passwords do not match.";
+            
+            $this->render("Home", "register", array('error' => $error_message));
+            
+            exit();
+            //return "Passwords do not match.";
         }
 
         // Hash password
@@ -129,22 +142,46 @@ class User {
 
         // Prepare database query
         $query = 'INSERT INTO user (fname, lname, phone, email, password, group_id) VALUES (?, ?, ?, ?, ?, ?)';
-
-        if ($stmt = $conn->prepare($query)) {
+        try{
+            if ($stmt = $conn->prepare($query)) {
             // Bind parameters
             $stmt->bind_param("sssssi", $firstName, $lastName, $phone, $email, $hashedPassword, $groupId);
 
-            // Execute query and check for successful insertion
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                // Handle errors, e.g., duplicate entry
-                return "An error occurred: " . $stmt->error;
+                // Execute query and check for successful insertion
+                if ($stmt->execute()) {
+                    return true;
+                } else {
+                    // Handle errors, e.g., duplicate entry
+                    $error_message =  "An error occurred: " . $stmt->error;
+                    $this->render("Home", "register", array('error' => $error_message));
+            
+                     exit();
+                    //"An error occurred: " . $stmt->error;
+                }
+            
             }
-        } else {
+             else {
             // Handle preparation error
-            return "An error occurred during query preparation: " . $conn->error;
+            $error_message =  "An error occurred during query preparation: " . $conn->error;
+            $this->render("Home", "register", array('error' => $error_message));
+            
+            exit();
+            //"An error occurred during query preparation: " . $conn->error;
+            }
+        }catch (mysqli_sql_exception $exception) {
+            // Handle specific error (duplicate entry)
+            if ($exception->getCode() == 1062) { // 1062 is the MySQL error code for duplicate entry
+                $error_message = "Email address is already in use.";
+                $this->render("Home", "register", ['error' => $error_message]);
+                exit();
+            } else {
+                // Handle other exceptions
+                $error_message = "An unexpected error occurred: " . $exception->getMessage();
+                $this->render("Home", "register", ['error' => $error_message]);
+                exit();
+            }
         }
+        
     }
     
 
@@ -359,6 +396,14 @@ class User {
         $stmt->close();
 
         return $result;
+    }
+    function render($controller, $view, $data = []) {
+        if($data != null){
+            extract($data);
+            include "Views/$controller/$view.php";
+        }else{
+            include "Views/$controller/$view.php";
+        }
     }
 
 }
