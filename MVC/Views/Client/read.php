@@ -1,8 +1,3 @@
-<?php
-include "Models/User.php";
-$user = User::read();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,28 +23,32 @@ $user = User::read();
                 <div class="grey-label">First Name</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($user['FNAME']); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->fname); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Last Name</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($user['LNAME']); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->lname); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Age</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo isset($user['AGE']) ? htmlspecialchars($user['AGE']) : 'Not specified.'; ?></div>
+                <div class="label-input">
+                <?php echo isset($_SESSION['user']->age) && $_SESSION['user']->age !== -1
+                    ? htmlspecialchars($_SESSION['user']->age)
+                    : "Not specified"; ?>
+                </div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Gender</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo isset($user['GENDER']) ? htmlspecialchars($user['GENDER']) : 'Not specified.'; ?></div>
+                <div class="label-input"><?php echo !empty($_SESSION['user']->gender) ? htmlspecialchars($_SESSION['user']->gender) : "Not specified"; ?></div>
             </div>
 
             <div class="grey-box">
@@ -58,8 +57,10 @@ $user = User::read();
             <div class="white-box">
                 <div class="label-input">
                     <?php
-                    echo isset($user['WEIGHT']) ? htmlspecialchars($user['WEIGHT']) : 'Not specified.';
-                    echo isset($user['WEIGHT_UNIT']) ? ' ' . htmlspecialchars($user['WEIGHT_UNIT']) : '';
+                    echo isset($_SESSION['user']->weight) && $_SESSION['user']->weight !== -1
+                    ? htmlspecialchars($_SESSION['user']->weight)
+                    : "Not specified";                
+                    echo !empty($_SESSION['user']->weight_unit) ? htmlspecialchars($_SESSION['user']->weight_unit) : "";
                     ?>
                 </div>
             </div>
@@ -70,8 +71,10 @@ $user = User::read();
             <div class="white-box">
                 <div class="label-input">
                     <?php
-                    echo isset($user['HEIGHT']) ? htmlspecialchars($user['HEIGHT']) : 'Not specified.';
-                    echo isset($user['HEIGHT_UNIT']) ? ' ' . htmlspecialchars($user['HEIGHT_UNIT']) : '';
+                     echo isset($_SESSION['user']->height) && $_SESSION['user']->height !== -1
+                    ? htmlspecialchars($_SESSION['user']->height)
+                    : "Not specified";
+                    echo !empty($_SESSION['user']->height_unit) ? htmlspecialchars($_SESSION['user']->height_unit) : "";
                     ?>
                 </div>
             </div>
@@ -80,21 +83,21 @@ $user = User::read();
                 <div class="grey-label">Email</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($user['EMAIL']); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->email); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Phone Number</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo isset($user['PHONE']) ? htmlspecialchars($user['PHONE']) : 'Not specified.'; ?></div>
+                <div class="label-input"><?php echo !empty($_SESSION['user']->phone) ? htmlspecialchars($_SESSION['user']->phone) : "Not specified"; ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Password</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo str_repeat('*', strlen($user['PASSWORD'])); ?></div>
+                <div class="label-input"><?php echo str_repeat('*', strlen($_SESSION['user']->password)); ?></div>
             </div>
 
             <div class="grey-box">
@@ -104,7 +107,7 @@ $user = User::read();
                 </table>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo isset($user['ADDITIONAL_NOTE']) ? htmlspecialchars($user['ADDITIONAL_NOTE']) : 'Not specified.'; ?></div>
+                <div class="label-input"><?php echo !empty($_SESSION['user']->additional_note) ? htmlspecialchars($_SESSION['user']->additional_note) : "Not specified"; ?></div>
             </div>
 
             <table>
@@ -113,8 +116,8 @@ $user = User::read();
                 </td>
 
                 <td>
-                    <form method="post" action="edit.php">
-                        <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                    <form method="post" action="?controller=user&action=edit">
+                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->user_id; ?>">
                         <button type="submit" class="default-button" name="edit">Edit Profile</button>
                     </form>
                 </td>
@@ -138,10 +141,8 @@ $user = User::read();
             <table>
                 <tr>
                     <td>
-                        <form method="post" action="?controller=&action=">
-                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                            <button type="submit" class="confirm-button" name="delete">Yes</button>
-                        </form>
+                        <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                        <button type="submit" class="confirm-button" name="delete">Yes</button>
                     </td>
                     <td>
                         <button class="confirm-button" id="popupCloseButton">No</button>

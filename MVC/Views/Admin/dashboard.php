@@ -1,3 +1,18 @@
+<?php
+// Check if the user is logged in
+$isLoggedIn = isset($_SESSION['user']) && !empty($_SESSION['user']);
+
+// Debugging: Dump the entire user object
+if ($isLoggedIn) {
+    var_dump($_SESSION['user']);
+
+} else {
+    // User is not logged in
+    echo "User is not logged in.";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,8 +41,7 @@
                         <td class="dropdown">
                             <div class="icon-container"><img class="icon-image" src="assets/profile.png" alt="Icon" /></div>
                             <div class="dropdown-content">
-                                <a href="read.php">My Profile</a> <!-- index.php?controller=user&action=read&id=<?php //echo $user['user_id']; 
-                                                                                                                ?> -->
+                                <a href="?controller=user&action=read">My Profile</a> 
                                 <a href="?controller=user&action=logout">Logout</a>
                             </div>
                         </td>
@@ -38,8 +52,8 @@
     </header>
     <nav class="nav-menu">
         <ul>
-            <li><a href="index.php">My Service</a></li>
-            <li><a href="client_list.php">Client List</a></li> <!-- fix: index.php?controller=user&action=list -->
+            <li><a href="?controller=user">My Service</a></li>
+            <li><a href="?controller=user&action=list">Client List</a></li> 
         </ul>
     </nav>
 </body>

@@ -1,3 +1,18 @@
+<?php
+// Check if the user is logged in
+$isLoggedIn = isset($_SESSION['user']) && !empty($_SESSION['user']);
+
+// Debugging: Dump the entire user object
+if ($isLoggedIn) {
+    var_dump($_SESSION['user']);
+
+} else {
+    // User is not logged in
+    echo "User is not logged in.";
+}
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -30,8 +45,8 @@
                                     alt="Icon" /> </div>
 
                             <div class="dropdown-content">
-                                <a href="read.php">My Profile</a> <!--- index.php?controller=user&action=read&id=<?php //echo $_SESSION['user_id']; ?> -->
-                                <a href="?controller=user&action=logout">Logout</a> <!-- will change later according to our MVC: index.php?controller=home&action=exit -->
+                                <a href="?controller=user&action=read">My Profile</a>
+                                <a href="?controller=user&action=logout">Logout</a> 
                             </div>
                         </td>
                     </tr>
@@ -41,7 +56,7 @@
     </header>
     <nav class="nav-menu">
         <ul>
-            <li><a href="?controller=booking&action=list">My Bookings</a></li> <!--- BOOKING MODEL AND CONTROLLER IMPLIED HERE -->
+            <li><a href="?controller=user&action=index">My Bookings</a></li>
         </ul>
     </nav>
 </body>

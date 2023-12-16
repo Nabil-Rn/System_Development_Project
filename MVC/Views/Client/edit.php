@@ -1,6 +1,3 @@
-<!---EDIT CURRENT USER IN SESSION PROFILE -> EDIT MY PROFILE for href="index.php?controller=user&action=edit&id=?" -->
-<!---WILL HAVE TO ADD IF-ELSE STATEMENT FOR CLIENT/ADMIN interface -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,8 +15,8 @@
 <body>
     <?php include_once "dashboard.php"; ?>
 
-    <form method="post" action="?controller=client&action=update">
-        <input type="hidden" name="user_id" value="<?php echo "test" ?>">
+    <form method="post" action="?controller=user&action=update">
+        <input type="hidden" name="user_id" value="<?php echo $user['USER_ID']; ?>">
 
         <div class="center">
             <div class="profile">

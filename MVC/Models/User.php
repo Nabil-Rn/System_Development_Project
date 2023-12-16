@@ -8,7 +8,7 @@ class User {
     public $fname;
     public $lname;
     public $email;
-    public $password;
+    public $password; // This should be a hashed password
     public $phone;
     public $age;
     public $gender;
@@ -19,74 +19,65 @@ class User {
     public $additional_note;
     public $group_id;
 
-    private $conn;
-
     public function __construct($id = -1) {
         global $conn;
 
-        if ($id > 0) {
-            $this->loadUserData($id);
-        } else {
-            $this->initializeDefaultValues();
-        }
-    }
-
-    private function loadUserData($id) {
-    // Prepare the SQL statement to fetch user data
-    $stmt = $this->conn->prepare("SELECT * FROM `user` WHERE user_id = ?");
-    if (!$stmt) {
-        throw new Exception("Error preparing statement: " . $this->conn->error);
-    }
-
-    // Bind the user ID parameter and execute the query
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Check if a user was found
-    if ($result->num_rows > 0) {
-        $assocUser = $result->fetch_assoc();
-
-        // Populate the object's properties with the fetched data
-        $this->user_id = $assocUser['user_id'];
-        $this->fname = $assocUser['fname'];
-        $this->lname = $assocUser['lname'];
-        $this->email = $assocUser['email'];
-        $this->password = $assocUser['password']; // This should be a hashed password
-        $this->phone = $assocUser['phone'] ?? "Not specified";
-        $this->age = $assocUser['age'] ?? null;
-        $this->gender = $assocUser['gender'] ?? "Not specified";
-        $this->weight = $assocUser['weight'] ?? null;
-        $this->weight_unit = $assocUser['weight_unit'] ?? "Not specified"; 
-        $this->height = $assocUser['height'] ?? null;
-        $this->height_unit = $assocUser['height_unit'] ?? "Not specified"; 
-        $this->additional_note = $assocUser['additional_note'] ?? "Not specified";
-        $this->group_id = $assocUser['group_id'];
-
-        $stmt->close();
-    } else {
-        // If no user is found
-        $this->initializeDefaultValues();
-    }
-}
-
-
-    private function initializeDefaultValues() {
+        // Initialize default values
         $this->user_id = -1;
         $this->fname = "";
         $this->lname = "";
         $this->email = "";
         $this->password = "";
-        $this->phone = "Not specified";
-        $this->age = null;
-        $this->gender = "Not specified";
-        $this->weight = null;
-        $this->weight_unit = "Not specified";
-        $this->height = null;
-        $this->height_unit = "Not specified";
-        $this->additional_note = "Not specified";
-        $this->group_id = null;
+        $this->phone = "";
+        $this->age = -1;
+        $this->gender = "";
+        $this->weight = -1;
+        $this->weight_unit = "";
+        $this->height = -1;
+        $this->height_unit = "";
+        $this->additional_note = "";
+        $this->group_id = -1;
+
+        // Load user data if a valid ID is provided
+        if ($id > 0) {
+            // Fetch user details from the database
+            $sql = "SELECT * FROM `user` WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+
+            // Check if the prepared statement was successful
+            if (!$stmt) {
+                throw new Exception("Error preparing statement: " . $conn->error);
+            }
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Check if a user was found
+            if ($result->num_rows > 0) {
+                $assocUser = $result->fetch_assoc();
+
+                // Populate the object's properties with the fetched data
+                $this->user_id = $assocUser['user_id'];
+                $this->fname = $assocUser['fname'];
+                $this->lname = $assocUser['lname'];
+                $this->email = $assocUser['email'];
+                $this->password = $assocUser['password']; // This should be a hashed password
+                $this->phone = $assocUser['phone'];
+                $this->age = $assocUser['age'];
+                $this->gender = $assocUser['gender'];
+                $this->weight = $assocUser['weight'];
+                $this->weight_unit = $assocUser['weight_unit']; 
+                $this->height = $assocUser['height'];
+                $this->height_unit = $assocUser['height_unit']; 
+                $this->additional_note = $assocUser['additional_note'];
+                $this->group_id = $assocUser['group_id'];
+
+                $stmt->close();
+            }
+        }
     }
+
 
     public static function login() {
         global $conn;
@@ -184,70 +175,65 @@ class User {
         
     }
     
-
-    // This is for Client List
     public static function list() {
         global $conn;
-
-        $sql = $sql = 'SELECT 
-        USER_ID,
-        GROUP_ID,
-        FNAME,
-        LNAME,
-        EMAIL,
-        PHONE
-    FROM 
-        USER
-    WHERE 
-        GROUP_ID <> 2';
     
-
+        $sql = 'SELECT 
+                    USER.USER_ID,
+                    USER.FNAME,
+                    USER.LNAME,
+                    USER.EMAIL,
+                    USER.GROUP_ID,
+                    `GROUP`.GROUP_NAME
+                FROM 
+                    USER
+                INNER JOIN 
+                    `GROUP` ON USER.GROUP_ID = `GROUP`.GROUP_ID';
+    
         $stmt = $conn->prepare($sql);
+    
+        if (!$stmt) {
+            die("Error in SQL query: " . $conn->error);
+        }
+    
         $stmt->execute();
         $result = $stmt->get_result();
-
-        // Check if fetch_all is available
-        if (method_exists($result, 'fetch_all')) {
-            $data = $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-        // If fetch_all is not available, fetch row by row
-            $data = array();
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
-            }
-        }
+    
+        // Fetch all rows into an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+    
         // Close the statement
         $stmt->close();
-
+    
         return $data;
     }
+    
+
+// For My Profile
+public static function read() {
+    global $conn;
+
+    // Check if user ID is present in the session
+    $userId = isset($_SESSION['user']) ? $_SESSION['user']->user_id : null;
+
+    $sql = "SELECT * FROM `USER` WHERE USER_ID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $userId);
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Return the fetched result
+    return $result->fetch_assoc();
+}
 
 
-    // For My Profile 
-    public static function read() {
-        global $conn;
-    
-        // Check if user ID is present in the session
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-    
-        $sql = "SELECT * FROM `USER` WHERE USER_ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $userId);
-    
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        // Return the fetched result
-        return $result->fetch_assoc();
-    }
-
-    // View Client Details as an Admin
     public static function view() {
         global $conn;
-
+    
         $userId = isset($_POST['user_id']) ? $_POST['user_id'] : null;
-
-        if (isset($_POST['view']) && isset($_POST['user_id']) && is_numeric($_POST['user_id']) && $_POST['user_id'] > 0) {
+    
+        if (isset($_POST['view'])) {
             // Prepare and execute the SQL query
             $sql = 'SELECT 
                 USER_ID,
@@ -267,22 +253,23 @@ class User {
             WHERE 
                 USER_ID = ? AND
                 GROUP_ID <> 2';  // Exclude admins
-
+    
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('i', $userId);
             $stmt->execute();
             $result = $stmt->get_result();
-
+    
             // Fetch the result
             $data = $result->fetch_assoc();
-
-            // Return the fetched data
-            return $data;
+    
+            // Return the fetched data or false if no data is fetched
+            return $data ? $data : false;
         }
-
+    
         // Return false if no data is fetched
         return false;
     }
+    
 
     
     // To modify later
@@ -324,6 +311,11 @@ class User {
 
         // Destroy the session
         session_destroy();
+
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        header("Location: ?controller=home");
     }
 
     // To modify later

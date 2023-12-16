@@ -1,12 +1,3 @@
-<?php
-
-// include "Models/User.php";
-// $user = User::read(); wrong?
-?>
-
-<!---READ CURRENT USER IN SESSION PROFILE -> MY PROFILE for href="index.php?controller=user&action=read&id=?" -->
-<!---WILL HAVE TO ADD IF-ELSE STATEMENT FOR CLIENT/ADMIN interface -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,46 +23,47 @@
                 <div class="grey-label">First Name</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($user['FNAME']); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->fname); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Last Name</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($user['LNAME']); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->lname); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Email</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($user['EMAIL']); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->email); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Phone Number</div>
             </div>
+
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($user['PHONE']); ?></div>
+                <div class="label-input"><?php echo !empty($_SESSION['user']->phone) ? htmlspecialchars($_SESSION['user']->phone) : "Not specified"; ?></div>
             </div>
+        
 
             <div class="grey-box">
                 <div class="grey-label">Password</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo str_repeat('*', strlen($user['PASSWORD'])); ?></div>
+                <div class="label-input"><?php echo str_repeat('*', strlen($_SESSION['user']->password)); ?></div>
             </div>
 
-            <form method="post" action="edit.php"> <!--- "index.php?controller=user&action=edit&id=<?php //echo $user['user_id']; 
-                                                                                                    ?>"-->
-                <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+            <form method="post" action="?controller=user&action=edit&id=<?php echo $_SESSION['user']->user_id; ?>">
+                <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->user_id; ?>">
                 <button type="submit" class="default-button" name="edit" style="padding:10px; margin:10px">Edit Profile</button>
             </form>
 
         </div>
     </div>
-    <?php include_once "../../footer.php"; ?>
+    <?php include_once "footer.php"; ?>
 </body>
 
 </html>

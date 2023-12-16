@@ -1,23 +1,3 @@
-<?php
-/*
-
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    // Not logged in, redirect to login page
-    //change to controller
-    header('Location: ../Home/index.php');
-    exit;
-}else {
-	include "Models/Booking.php";
-    $data = Booking::list();
-}
-
-
-*/
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,10 +50,7 @@ if (isset($data) && is_array($data) && !empty($data)) {
                 <td class="table-content"><label>' . $booking['SESSION_TIME'] . '</label></td>
                 <td class="table-content"><label>' . $booking['BOOKING_DATE'] . '</label></td>
                 <td class="table-content">
-                    <form method="post" action="index.php?controller=booking&action=delete&id=' . $booking['BOOKING_ID'] . '">
-                        <input type="hidden" name="booking_id" value="' . $booking['BOOKING_ID'] . '">
                         <button type="submit" class="delete-button" name="delete">Cancel Appointment</button>
-                    </form>
                 </td>
             </tr>';
     }
