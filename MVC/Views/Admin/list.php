@@ -4,28 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="CSS/admin.css">
-    <link rel="stylesheet" href="CSS/view.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 
 <body>
     <?php include_once "dashboard.php"; ?>
     <div class="center">
         <div class="profile">
+
+            <form id="searchForm"  onsubmit="updateAction()" method="post">
             <table>
                 <tr>
                     <td>
-                        <input type="search" placeholder="Search...">
+                        <input type="search"  name="query" placeholder="Search...">
                     </td>
                     <td>
                         <button type="submit" class="search-button" name="search">Search</button>
                     </td>
                 </tr>
             </table>
+            </form>
+
+        <script>
+           function updateAction() {
+                var lookupValue = document.getElementsByName('query')[0].value;
+                var form = document.getElementById('searchForm');
+                form.action = '?controller=user&action=search&query=' + encodeURIComponent(lookupValue);
+            }
+        </script>
+
 
             <div class="container1">
                 <table>
@@ -57,9 +63,8 @@
             </div>
         </div>
     </div>
-    <footer>
-        <?php include "footer.php"; ?>
-    </footer>
+
+    <?php include_once "footer.php"; ?>
 </body>
 
 </html>

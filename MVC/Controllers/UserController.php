@@ -1,5 +1,6 @@
 <?php
 include_once "Models/User.php";
+include_once "Models/Booking.php";
 
 class UserController {
 
@@ -11,6 +12,9 @@ class UserController {
 
          // Initialize the User model
          $userModel = new User();
+
+        // Initialize the Booking model (for Client index.php)
+        $bookingModel = new Booking();
 
          if ($action == "login") {
              if(isset($_SESSION['user'])){
@@ -49,14 +53,21 @@ class UserController {
                  // Show registration form
                  $this->render("User", "register");
              }
- 
          }  else if ($action == "list") {
             if ($_SESSION['user']->group_id == 2) {
                 $users = User::$action();
                 $this->render("Admin", $action, $users);
             }
+        }  else if ($action == "search") {
+            $users = $userModel->$action();
 
-        }  else if ($action == "read") {
+            if (!empty($users)) {
+                $users = User::listByQuery();
+                $this->render("Admin", $action, $users);
+            } else {
+                $this->render("Admin", $action, array());
+            }
+        } else if ($action == "read") {
             $user = User::$action();
             if ($_SESSION['user']->group_id == 1) {
                 $this->render("Client", $action, ['user' => $user]);
@@ -87,6 +98,7 @@ class UserController {
         if (isset($_SESSION['user'])) {
             // Check group ID
             if ($_SESSION['user']->group_id == 1) {
+                //$booking= Booking::$list();
                 $this->render("Client", "index");
             } else if ($_SESSION['user']->group_id == 2) {
                 $this->render("Admin", "index");

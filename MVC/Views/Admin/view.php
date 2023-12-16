@@ -111,7 +111,7 @@
             <!-- Add the delete button at the end -->
             <table>
                 <td>
-                    <form method="post" action="?controller=client&action=delete">
+                    <form method="post" action="?controller=user&action=delete">
                         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->user_id); ?>">
                         <button type="submit" class="default-button" name="delete">Delete</button>
                     </form>

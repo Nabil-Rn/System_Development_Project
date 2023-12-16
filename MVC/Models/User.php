@@ -94,6 +94,7 @@ class User {
             $user->lname = $row['lname'];
             $user->group_id = $row['group_id'];
             $_SESSION['user'] = $user;
+            header("Location: ?controller=user"); // ADDED
         }else{
             $_SESSION['alert'] = "Login unsuccessful. Please try again.";
         }
@@ -174,6 +175,78 @@ class User {
         }
         
     }
+
+    public static function search(){
+        global $conn;
+
+        $lookupTerm = isset($_POST['query']) ? $_POST['query'] : '';
+        if (!empty($lookupTerm)) {
+            $sql = "SELECT * FROM `user` WHERE `fname` LIKE ? OR `lname` LIKE ?";
+            $stmt = $conn->prepare($sql);
+            $lookupTerm = "%$lookupTerm%";
+            $stmt->bind_param('ss', $lookupTerm, $lookupTerm);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+
+            if ($result->num_rows > 0) {
+                $rows = array();
+                while ($row = $result->fetch_assoc()) {
+                    $rows[] = $row;
+            }
+
+                return $rows;
+            }
+        }
+
+        return null;
+    }
+
+    public static function listByQuery() {
+        global $conn;
+    
+        $lookupTerm = isset($_POST['query']) ? $_POST['query'] : '';
+    
+        // Use a placeholder for the condition in the WHERE clause
+        $sql = 'SELECT 
+                    USER.USER_ID,
+                    USER.FNAME,
+                    USER.LNAME,
+                    USER.EMAIL,
+                    USER.GROUP_ID,
+                    `GROUP`.GROUP_NAME
+                FROM 
+                    USER
+                INNER JOIN 
+                    `GROUP` ON USER.GROUP_ID = `GROUP`.GROUP_ID
+                WHERE
+                    USER.FNAME LIKE ? OR
+                    USER.LNAME LIKE ? OR
+                    USER.EMAIL LIKE ? OR
+                    `GROUP`.GROUP_NAME LIKE ?';
+    
+        $stmt = $conn->prepare($sql);
+    
+        if (!$stmt) {
+            die("Error in SQL query: " . $conn->error);
+        }
+    
+        // Bind the parameters to the placeholders
+        $searchTerm = "%$lookupTerm%";
+        $stmt->bind_param("ssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm);
+    
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Fetch all rows into an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+    
+        // Close the statement
+        $stmt->close();
+    
+        return $data;
+    }
+    
     
     public static function list() {
         global $conn;
@@ -188,7 +261,9 @@ class User {
                 FROM 
                     USER
                 INNER JOIN 
-                    `GROUP` ON USER.GROUP_ID = `GROUP`.GROUP_ID';
+                    `GROUP` ON USER.GROUP_ID = `GROUP`.GROUP_ID
+                WHERE
+                    USER.GROUP_ID = 1';
     
         $stmt = $conn->prepare($sql);
     
@@ -208,24 +283,49 @@ class User {
         return $data;
     }
     
-
-// For My Profile
-public static function read() {
-    global $conn;
-
-    // Check if user ID is present in the session
-    $userId = isset($_SESSION['user']) ? $_SESSION['user']->user_id : null;
-
-    $sql = "SELECT * FROM `USER` WHERE USER_ID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $userId);
-
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Return the fetched result
-    return $result->fetch_assoc();
-}
+    
+    public static function read() {
+        global $conn;
+    
+        // Check if user ID is present in the session
+        $userId = isset($_SESSION['user']) ? $_SESSION['user']->user_id : null;
+    
+        $sql = "SELECT * FROM `USER` WHERE USER_ID = ?";
+        $stmt = $conn->prepare($sql);
+    
+        // Check if the prepared statement was successful
+        if (!$stmt) {
+            return null; // or handle the error as needed
+        }
+    
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Fetch the result and store it in a variable
+        $user = $result->fetch_assoc();
+    
+        // Close the statement
+        $stmt->close();
+    
+        // Store user data in the session
+        $_SESSION['user']->fname = $user['fname'];
+        $_SESSION['user']->lname = $user['lname'];
+        $_SESSION['user']->age = $user['age'];
+        $_SESSION['user']->gender = $user['gender'];
+        $_SESSION['user']->weight = $user['weight'];
+        $_SESSION['user']->weight_unit = $user['weight_unit'];
+        $_SESSION['user']->height = $user['height'];
+        $_SESSION['user']->height_unit = $user['height_unit'];
+        $_SESSION['user']->email = $user['email'];
+        $_SESSION['user']->phone = $user['phone'];
+        $_SESSION['user']->password = $user['password'];
+        $_SESSION['user']->additional_note = $user['additional_note'];
+    
+        // Return the fetched result
+        return $user;
+    }
+    
 
 
     public static function view() {
@@ -271,40 +371,6 @@ public static function read() {
     }
     
 
-    
-    // To modify later
-    public static function update() {
-        global $conn;
-
-        if (isset($_POST['update'])) {
-            if (isset($_POST['user_id'])) {
-                $user_id = $_POST['user_id'];
-                $group_id = $_POST['group_id'];
-
-                $sql = 'UPDATE `user` SET group_id = ? WHERE user_id = ?';
-                $stmt = $conn->prepare($sql);
-
-                if (!$stmt) {
-                    return 0;
-                }
-
-                $stmt->bind_param('ii', $group_id, $user_id);
-                $stmt->execute();
-
-                if ($stmt->errno) {
-                    $stmt->close();
-                    return 0;
-                }
-
-                $stmt->close();
-
-                header("Location: index.php?controller=user&action=read&id=$user_id");
-                exit();
-            }
-        }
-        return false;
-    }
-
     public static function logout() {
         // Unset all session variables
         session_unset();
@@ -318,37 +384,112 @@ public static function read() {
         header("Location: ?controller=home");
     }
 
-    // To modify later
-    public static function delete() {
-        global $conn;
 
-        if (isset($_POST['delete'])) {
-            $user_id = $_POST['user_id'];
+public static function update() {
+    global $conn;
 
-            $sql = 'DELETE FROM `user` WHERE user_id = ?';
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('i', $user_id);
-            $stmt->execute();
+    if (isset($_POST['update'])) {
+        $userId = isset($_SESSION['user']) ? $_SESSION['user']->user_id : null;
 
-            if ($stmt->error) {
-                die('Error executing statement: ' . $stmt->error);
-            }
-
-            $stmt->close();
-            
-            // Unset all session variables
-            $_SESSION = array();
-
-            // Destroy the session
-            session_destroy();
-
-            // Redirect to the login page
-            header("Location: index.php?controller=home&action=login"); //TO MODIFY LATER
-            exit();
+        // Check if the user ID is set
+        if ($userId === null) {
+            return 0;
         }
 
-        return false;
+        // Retrieve updated user information from the POST data
+        $fname = isset($_POST['fname']) ? $_POST['fname'] : null;
+        $lname = isset($_POST['lname']) ? $_POST['lname'] : null;
+        $email = isset($_POST['email']) ? $_POST['email'] : null;
+        $password = isset($_POST['password']) ? $_POST['password'] : null;
+        $phone = isset($_POST['phone']) ? $_POST['phone'] : null;
+        $age = isset($_POST['age']) ? $_POST['age'] : null;
+        $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
+        $weight = isset($_POST['weight']) ? $_POST['weight'] : null;
+        $weightUnit = isset($_POST['weightUnit']) ? $_POST['weightUnit'] : null;
+        $height = isset($_POST['height']) ? $_POST['height'] : null;
+        $heightUnit = isset($_POST['heightUnit']) ? $_POST['heightUnit'] : null;
+        $additionalNote = isset($_POST['note']) ? $_POST['note'] : null;
+
+        // Check if required fields are set
+        if ($fname === null || $lname === null || $email === null || $password === null) {
+            return 0;
+        }
+
+        // Hash the password before updating (consider using a proper password hashing function)
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Update user information in the database
+        $sql = 'UPDATE `user` SET fname = ?, lname = ?, email = ?, password = ?, phone = ?, age = ?, gender = ?, weight = ?, weight_unit = ?, height = ?, height_unit = ?, additional_note = ? WHERE user_id = ?';
+        $stmt = $conn->prepare($sql);
+
+        // Check if the prepared statement was successful
+        if (!$stmt) {
+            return 0;
+        }
+
+        $stmt->bind_param('ssssssssssssi', $fname, $lname, $email, $hashedPassword, $phone, $age, $gender, $weight, $weightUnit, $height, $heightUnit, $additionalNote, $userId);
+        $stmt->execute();
+
+        if ($stmt->errno) {
+            $stmt->close();
+            return 0;
+        }
+
+        $stmt->close();
+
+        // Redirect to the user profile page after successful update
+        header("Location: ?controller=user&action=read");
+        exit();
     }
+
+    return false;
+}
+
+// To modify later
+public static function delete() {
+    global $conn;
+
+    if (isset($_POST['delete'])) {
+        $userId = isset($_SESSION['user']) ? $_SESSION['user']->user_id : null;
+
+        // Check if the user ID is set
+        if ($userId === null) {
+            return false;
+        }
+
+        $sql = 'DELETE FROM `user` WHERE user_id = ?';
+        $stmt = $conn->prepare($sql);
+
+        // Check if the prepared statement was successful
+        if (!$stmt) {
+            die('Error preparing statement: ' . $conn->error);
+        }
+
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+
+        // Check for errors during execution
+        if ($stmt->error) {
+            $stmt->close();
+            die('Error executing statement: ' . $stmt->error);
+        }
+
+        $stmt->close();
+
+        // Unset all session variables
+        $_SESSION = array();
+
+        // Destroy the session
+        session_destroy();
+
+        // Redirect to the login page
+        header("Location: ?controller=home"); 
+        exit();
+    }
+
+    return false;
+}
+
 
     //REVIEW LATER...NEED TO REVIEW/UPDATE DB DEPENDING ON OUR ACTION NAMES
     public static function hasRights($classname, $action) {

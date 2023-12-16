@@ -8,17 +8,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="CSS/home.css">
-    <link rel="stylesheet" href="CSS/admin.css">
-    <link rel="stylesheet" href="CSS/view.css">
-    <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
     <script src="https://schedule.nylas.com/schedule-editor/v1.0/schedule-editor.js" type="text/javascript"></script>
 </head>
 
 <body>
-    <?php include_once "dashboard.php"; ?>
+    <?php include "dashboard.php"; ?>
+
     <div class="center">
         <div class="profile">
             <h1 class="title-header">My Services</h1> <br />
@@ -55,7 +50,7 @@
                             </script>
                         </td>
                         <td>
-                            <form method="post" action="view_appointments.php">
+                            <form method="post" action="?controller=booking&action=list">
                                 <button type="submit" class="default-button" name="view">View Appointments</button>
                             </form>
                         </td>
@@ -85,9 +80,8 @@
             </script>
         </div>
     </div>
-    <footer>
-        <?php include "footer.php"; ?>
-    </footer>
+
+    <?php include "footer.php"; ?>
 
 </body>
 

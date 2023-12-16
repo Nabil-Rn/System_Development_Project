@@ -56,7 +56,7 @@ if ($isLoggedIn) {
     </header>
     <nav class="nav-menu">
         <ul>
-            <li><a href="?controller=user&action=index">My Bookings</a></li>
+            <li><a href="?controller=user">My Bookings</a></li>
         </ul>
     </nav>
 </body>

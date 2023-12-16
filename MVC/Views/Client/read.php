@@ -4,12 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JUSTBFITNESS</title>
-    <link rel="shortcut icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="CSS/home.css">
-    <link rel="stylesheet" href="CSS/view.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
 
 <body>
@@ -23,14 +17,14 @@
                 <div class="grey-label">First Name</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->fname); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($user['fname']); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Last Name</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->lname); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($user['lname']); ?></div>
             </div>
 
             <div class="grey-box">
@@ -38,8 +32,8 @@
             </div>
             <div class="white-box">
                 <div class="label-input">
-                <?php echo isset($_SESSION['user']->age) && $_SESSION['user']->age !== -1
-                    ? htmlspecialchars($_SESSION['user']->age)
+                <?php echo isset($user['age']) && $user['age'] !== -1
+                    ? htmlspecialchars($user['age'])
                     : "Not specified"; ?>
                 </div>
             </div>
@@ -48,7 +42,7 @@
                 <div class="grey-label">Gender</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo !empty($_SESSION['user']->gender) ? htmlspecialchars($_SESSION['user']->gender) : "Not specified"; ?></div>
+                <div class="label-input"><?php echo !empty($user['gender']) ? htmlspecialchars($user['gender']) : "Not specified"; ?></div>
             </div>
 
             <div class="grey-box">
@@ -57,10 +51,10 @@
             <div class="white-box">
                 <div class="label-input">
                     <?php
-                    echo isset($_SESSION['user']->weight) && $_SESSION['user']->weight !== -1
-                    ? htmlspecialchars($_SESSION['user']->weight)
+                    echo isset($user['weight']) && $user['weight'] !== -1
+                    ? htmlspecialchars($user['weight'])
                     : "Not specified";                
-                    echo !empty($_SESSION['user']->weight_unit) ? htmlspecialchars($_SESSION['user']->weight_unit) : "";
+                    echo !empty($user['weight_unit']) ? htmlspecialchars($user['weight_unit']) : "";
                     ?>
                 </div>
             </div>
@@ -71,10 +65,10 @@
             <div class="white-box">
                 <div class="label-input">
                     <?php
-                     echo isset($_SESSION['user']->height) && $_SESSION['user']->height !== -1
-                    ? htmlspecialchars($_SESSION['user']->height)
+                     echo isset($user['height']) && $user['height'] !== -1
+                    ? htmlspecialchars($user['height'])
                     : "Not specified";
-                    echo !empty($_SESSION['user']->height_unit) ? htmlspecialchars($_SESSION['user']->height_unit) : "";
+                    echo !empty($user['height_unit']) ? htmlspecialchars($user['height_unit']) : "";
                     ?>
                 </div>
             </div>
@@ -83,21 +77,21 @@
                 <div class="grey-label">Email</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo htmlspecialchars($_SESSION['user']->email); ?></div>
+                <div class="label-input"><?php echo htmlspecialchars($user['email']); ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Phone Number</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo !empty($_SESSION['user']->phone) ? htmlspecialchars($_SESSION['user']->phone) : "Not specified"; ?></div>
+                <div class="label-input"><?php echo !empty($user['phone']) ? htmlspecialchars($user['phone']) : "Not specified"; ?></div>
             </div>
 
             <div class="grey-box">
                 <div class="grey-label">Password</div>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo str_repeat('*', strlen($_SESSION['user']->password)); ?></div>
+                <div class="label-input"><?php echo str_repeat('*', strlen($user['password'])); ?></div>
             </div>
 
             <div class="grey-box">
@@ -107,7 +101,7 @@
                 </table>
             </div>
             <div class="white-box">
-                <div class="label-input"><?php echo !empty($_SESSION['user']->additional_note) ? htmlspecialchars($_SESSION['user']->additional_note) : "Not specified"; ?></div>
+                <div class="label-input"><?php echo !empty($user['additional_note']) ? htmlspecialchars($user['additional_note']) : "Not specified"; ?></div>
             </div>
 
             <table>
@@ -116,8 +110,7 @@
                 </td>
 
                 <td>
-                    <form method="post" action="?controller=user&action=edit">
-                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->user_id; ?>">
+                    <form method="post" action="?controller=user&action=edit&id=<?php echo htmlspecialchars($user['user_id']); ?>">
                         <button type="submit" class="default-button" name="edit">Edit Profile</button>
                     </form>
                 </td>
@@ -126,9 +119,15 @@
     
         </div>
     </div>
+    <!--- interactive message (will implement later)
     <div class="pop-up"> <div class="blackbar"><p class="message">Your account has been successfully deleted.</p></div></div>
+    -->
     <!-- Footer -->
     <?php include_once "footer.php"; ?>
+
+</body>
+
+</html>
 
 
 <!-- Modal Structure -->
@@ -141,7 +140,7 @@
             <table>
                 <tr>
                     <td>
-                        <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                        <input type="hidden" name="user_id" value="<?php //echo $user['user_id']; ?>">
                         <button type="submit" class="confirm-button" name="delete">Yes</button>
                     </td>
                     <td>
