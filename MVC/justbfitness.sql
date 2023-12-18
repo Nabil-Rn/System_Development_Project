@@ -328,6 +328,37 @@ INSERT INTO `booking` (`booking_date`, `appointment_date`, `timeslot_id`, `user_
 (NOW(), '2023-12-31', 13, 10);
 
 
+ALTER TABLE `booking`
+DROP FOREIGN KEY `booking_ibfk_2`;
+
+-- Add a new foreign key constraint with ON DELETE CASCADE
+ALTER TABLE `booking`
+ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+
+
+ALTER TABLE `availability`
+DROP FOREIGN KEY `availability_ibfk_1`;
+
+-- Add a new foreign key constraint with ON DELETE CASCADE
+ALTER TABLE `availability`
+ADD CONSTRAINT `availability_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
+
+
+ALTER TABLE `timeslots`
+DROP FOREIGN KEY `timeslots_ibfk_1`;
+
+-- Add a new foreign key constraint with ON DELETE CASCADE
+ALTER TABLE `timeslots`
+ADD CONSTRAINT `timeslots_ibfk_1` FOREIGN KEY (`availability_id`) REFERENCES `availability` (`availability_id`) ON DELETE CASCADE;
+
+
+ALTER TABLE `booking`
+DROP FOREIGN KEY `booking_ibfk_1`;
+
+-- Add a new foreign key constraint with ON DELETE CASCADE
+ALTER TABLE `booking`
+ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`timeslot_id`) REFERENCES `timeslots` (`timeslot_id`) ON DELETE CASCADE;
+
 
 COMMIT;
 

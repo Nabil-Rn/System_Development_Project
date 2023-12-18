@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <!-- Admin Dashboard -->
     <header>
         <div class="header-container">
             <div class="right-box">

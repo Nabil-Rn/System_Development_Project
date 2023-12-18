@@ -111,18 +111,59 @@
             <!-- Add the delete button at the end -->
             <table>
                 <td>
-                    <form method="post" action="?controller=user&action=delete">
-                        <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->user_id); ?>">
-                        <button type="submit" class="default-button" name="delete">Delete</button>
-                    </form>
+                    <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user->user_id); ?>">
+                    <button type="submit" class="default-button" name="confirm-delete" id="confirmDeleteButton">Delete</button>
                 </td>
             </table>
         </div>
     </div>
 
-    <footer>
-        <?php include "footer.php"; ?>
-    </footer>
-</body>
 
+    <?php include "footer.php"; ?>
+
+<!-- Modal Structure -->
+<div id="modalOverlay" style="display: none;" onclick="closeModal()">
+    <div id="deleteModalContainer" onclick="event.stopPropagation();">
+        <div id="deleteModal">
+            <p id="deleteTitle">Confirm delete</p>
+            <p id="deleteSubtitle">Are you sure you want to delete this Client account?</p>
+            <p id="deleteText">This action is irreversible and cannot be undone.</p>
+            <table>
+                <tr>
+                    <td>
+                        <form method="post" action="?controller=user&action=delete">
+                            <input type="hidden" name="user_id" value="<?php echo isset($user->user_id) ? htmlspecialchars($user->user_id) : ''; ?>">
+                            <button type="submit" class="confirm-button" style="margin-left: 30px;" name="delete">Yes</button>
+                        </form>
+                    </td>
+                    <td>
+                        <button class="confirm-button" id="popupCloseButton">No</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+            showDeleteModal();
+        });
+
+        document.getElementById('popupCloseButton').addEventListener('click', function () {
+            closeModal();
+        });
+    });
+
+    function showDeleteModal() {
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+</script>
+
+</body>
 </html>

@@ -181,7 +181,7 @@ class User {
 
         $lookupTerm = isset($_POST['query']) ? $_POST['query'] : '';
         if (!empty($lookupTerm)) {
-            $sql = "SELECT * FROM `user` WHERE `fname` LIKE ? OR `lname` LIKE ?";
+            $sql = "SELECT * FROM `user` WHERE (`fname` LIKE ? OR `lname` LIKE ?) AND `group_id` = 1";
             $stmt = $conn->prepare($sql);
             $lookupTerm = "%$lookupTerm%";
             $stmt->bind_param('ss', $lookupTerm, $lookupTerm);
@@ -222,8 +222,7 @@ class User {
                 WHERE
                     USER.FNAME LIKE ? OR
                     USER.LNAME LIKE ? OR
-                    USER.EMAIL LIKE ? OR
-                    `GROUP`.GROUP_NAME LIKE ?';
+                    USER.EMAIL LIKE ?';
     
         $stmt = $conn->prepare($sql);
     
@@ -233,7 +232,7 @@ class User {
     
         // Bind the parameters to the placeholders
         $searchTerm = "%$lookupTerm%";
-        $stmt->bind_param("ssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm);
+        $stmt->bind_param("sss", $searchTerm, $searchTerm, $searchTerm);
     
         $stmt->execute();
         $result = $stmt->get_result();
@@ -445,48 +444,58 @@ public static function update() {
     return false;
 }
 
-// To modify later
 public static function delete() {
     global $conn;
 
-    if (isset($_POST['delete'])) {
-        $userId = isset($_SESSION['user']) ? $_SESSION['user']->user_id : null;
+    // Check if user ID is present in the session
+    $userId = isset($_SESSION['user']) ? $_SESSION['user']->user_id : null;
 
-        // Check if the user ID is set
-        if ($userId === null) {
-            return false;
+    // Check if the 'deleteAccount' key is present in the $_POST array
+    if (isset($_POST['delete'])) {
+        // Validate user ID
+        if (!$userId) {
+            die('Error: User ID not available. Please log in.');
         }
 
-        $sql = 'DELETE FROM `user` WHERE user_id = ?';
+        // Prepare and execute the SQL query to delete the user account
+        $sql = 'DELETE FROM USER WHERE USER_ID = ?';
         $stmt = $conn->prepare($sql);
 
-        // Check if the prepared statement was successful
+        // Check for errors in preparing the statement
         if (!$stmt) {
             die('Error preparing statement: ' . $conn->error);
         }
 
+        // Bind parameters and execute the statement
         $stmt->bind_param('i', $userId);
         $stmt->execute();
 
-        // Check for errors during execution
+        // Check for errors in executing the statement
         if ($stmt->error) {
-            $stmt->close();
+            // Handle the error (e.g., display an error message or redirect to an error page)
             die('Error executing statement: ' . $stmt->error);
         }
 
+        // Close the statement
         $stmt->close();
 
         // Unset all session variables
-        $_SESSION = array();
+        session_unset();
 
         // Destroy the session
         session_destroy();
 
-        // Redirect to the login page
-        header("Location: ?controller=home"); 
+        // Empty cache
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
+        // Redirect to the home page after successful account deletion
+        header('Location: index.php?controller=home');
         exit();
     }
 
+    // Return false if the 'deleteAccount' key is not present in the $_POST array
     return false;
 }
 

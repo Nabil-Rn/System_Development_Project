@@ -32,9 +32,9 @@
             </div>
             <div class="white-box">
                 <div class="label-input">
-                    <?php echo isset($user['age']) && $user['age'] !== -1
-                        ? htmlspecialchars($user['age'])
-                        : "Not specified"; ?>
+                <?php echo isset($user['age']) && $user['age'] !== -1
+                    ? htmlspecialchars($user['age'])
+                    : "Not specified"; ?>
                 </div>
             </div>
 
@@ -52,8 +52,8 @@
                 <div class="label-input">
                     <?php
                     echo isset($user['weight']) && $user['weight'] !== -1
-                        ? htmlspecialchars($user['weight'])
-                        : "Not specified";
+                    ? htmlspecialchars($user['weight'])
+                    : "Not specified";                
                     echo !empty($user['weight_unit']) ? htmlspecialchars($user['weight_unit']) : "";
                     ?>
                 </div>
@@ -65,9 +65,9 @@
             <div class="white-box">
                 <div class="label-input">
                     <?php
-                    echo isset($user['height']) && $user['height'] !== -1
-                        ? htmlspecialchars($user['height'])
-                        : "Not specified";
+                     echo isset($user['height']) && $user['height'] !== -1
+                    ? htmlspecialchars($user['height'])
+                    : "Not specified";
                     echo !empty($user['height_unit']) ? htmlspecialchars($user['height_unit']) : "";
                     ?>
                 </div>
@@ -97,9 +97,7 @@
             <div class="grey-box">
                 <table>
                     <td><label class="grey-label">Additional Note</label></td>
-                    <td>
-                        <p class="subtext">[Share any relevant information about your medical conditions, injuries, allergies, meds, past fitness, and goals]</p>
-                    </td>
+                    <td><p class="subtext">[Share any relevant information about your medical conditions, injuries, allergies, meds, past fitness, and goals]</p></td>
                 </table>
             </div>
             <div class="white-box">
@@ -118,7 +116,7 @@
                 </td>
 
             </table>
-
+    
         </div>
     </div>
     <!--- interactive message (will implement later)
@@ -126,11 +124,6 @@
     -->
     <!-- Footer -->
     <?php include_once "footer.php"; ?>
-
-</body>
-
-</html>
-
 
 <!-- Modal Structure -->
 <div id="modalOverlay" style="display: none;" onclick="closeModal()">
@@ -142,9 +135,10 @@
             <table>
                 <tr>
                     <td>
-                        <input type="hidden" name="user_id" value="<?php //echo $user['user_id']; 
-                                                                    ?>">
-                        <button type="submit" class="confirm-button" name="delete">Yes</button>
+                        <form method="post" action="?controller=user&action=delete">
+                            <input type="hidden" name="user_id" value="<?php echo isset($user->user_id) ? htmlspecialchars($user->user_id) : ''; ?>">
+                            <button type="submit" class="confirm-button"  name="delete">Yes</button>
+                        </form>
                     </td>
                     <td>
                         <button class="confirm-button" id="popupCloseButton">No</button>
@@ -156,12 +150,12 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
             showDeleteModal();
         });
 
-        document.getElementById('popupCloseButton').addEventListener('click', function() {
+        document.getElementById('popupCloseButton').addEventListener('click', function () {
             closeModal();
         });
     });
@@ -176,5 +170,4 @@
 </script>
 
 </body>
-
 </html>
