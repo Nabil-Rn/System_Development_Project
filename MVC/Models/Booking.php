@@ -114,9 +114,86 @@ class Booking {
         return $data;
     }
 
-    // Additional methods related to booking operations can be added here
 
-    public function getAPIjson(){
+    public static function search(){
+        global $conn;
+    
+        $lookupTerm = isset($_POST['query']) ? $_POST['query'] : '';
+    
+        if (!empty($lookupTerm)) {
+            $lookupTerm = "%$lookupTerm%";
+            $sql = "SELECT booking.*, user.fname, user.lname
+                    FROM booking
+                    INNER JOIN user ON booking.user_id = user.user_id
+                    WHERE user.fname LIKE ? OR user.lname LIKE ?";
+            
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ss', $lookupTerm, $lookupTerm);
+            $stmt->execute();
+    
+            $result = $stmt->get_result();
+            $stmt->close();
+    
+            if ($result->num_rows > 0) {
+                $rows = array();
+                while ($row = $result->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+                return $rows;
+            }
+        }
+    
+        return null;
+    }
+    
+    public static function listByQuery() {
+        global $conn;
+    
+        $lookupTerm = isset($_POST['query']) ? $_POST['query'] : '';
+    
+        // Use a placeholder for the condition in the WHERE clause
+        $sql = 'SELECT
+                    b.USER_ID,
+                    b.BOOKING_ID,
+                    b.BOOKING_DATE,
+                    b.APPOINTMENT_DATE,
+                    u.FNAME,
+                    u.LNAME,
+                    CONCAT(u.FNAME, " ", u.LNAME) AS FULL_NAME,
+                    CONCAT(t.TIMESLOT_START, " - ", t.TIMESLOT_END) AS SESSION_TIME
+                FROM
+                    BOOKING b
+                JOIN TIMESLOTS t ON b.TIMESLOT_ID = t.TIMESLOT_ID
+                JOIN USER u ON b.USER_ID = u.USER_ID
+                WHERE
+                    u.FNAME LIKE ? OR
+                    u.LNAME LIKE ?';
+    
+        $stmt = $conn->prepare($sql);
+    
+        if (!$stmt) {
+            die("Error in SQL query: " . $conn->error);
+        }
+    
+        // Bind the parameters to the placeholders
+        $searchTerm = "%$lookupTerm%";
+        $stmt->bind_param("ss", $searchTerm, $searchTerm);
+    
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Fetch all rows into an associative array
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+    
+        // Close the statement
+        $stmt->close();
+    
+        return $data;
+    }
+    
+
+    // Additional methods related to booking operations can be added here
+    public static function getAPIjson(){
         // Set your Nylas Scheduler API credentials and endpoint
         $accessToken = 'PTcBVppDmBLQOqQxIGUFnWXwA4bcAb';
         $schedulerId = '';

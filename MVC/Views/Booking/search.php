@@ -46,23 +46,22 @@
     <div class="center">
         <div class="profile">
 
-
-        <form id="searchForm"  onsubmit="updateAction()" method="post">
+        <form id="searchForm" onsubmit="updateAction()" method="post">
             <table>
-                <tr>
-                    <td>
-                        <div class="title-header">View Appointments</div>
-                    </td>
-                    <td>
-                        <input type="search"  name="query" placeholder="Search...">
-                    </td>
-                    <td>
-                        <button type="submit" class="search-button" name="search">Search</button>
-                    </td>
+            <tr>
+                <td>
+                    <div class="title-header">View Appointments</div>
+                </td>
+                <td>
+                    <input type="search"  name="query" placeholder="Search...">
+                </td>
+                <td>
+                    <button type="submit" class="search-button" name="search">Search</button>
+                </td>
                 </tr>
             </table>
         </form>
-
+    
         <script>
            function updateAction() {
                 var lookupValue = document.getElementsByName('query')[0].value;
@@ -72,6 +71,8 @@
         </script>
 
             <?php
+            $lookupTerm = isset($_POST['query']) ? $_POST['query'] : '';
+            if (!empty($data)) {
             if (isset($data) && is_array($data) && !empty($data)) {
                 echo '<table>
                         <tr>
@@ -110,6 +111,17 @@
             } else {
                 echo '<div class="null-box"><div class="grey-label">No appointments have been made yet.</div></div>';
             }
+
+        } else {
+            echo '<div class="null-box" style="text-align:center;">';
+            echo '<table>';
+            echo '<tr>';
+            echo '<td style="text-align:center;"><div class="grey-label">Search for \'' . htmlspecialchars($lookupTerm) . '\'</div></td>';
+            echo '<td style="text-align:center;"><div class="grey-label">No matching records found. Please refine your search by entering the client\'s first or last name.</div></td>';
+            echo '</tr>';
+            echo '</table>';
+            echo '</div>';
+        }
             ?>
 
         </div>

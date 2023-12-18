@@ -25,6 +25,14 @@
                 </table>
             </form>
 
+            <script>
+                function updateAction() {
+                    var lookupValue = document.getElementsByName('query')[0].value;
+                    var form = document.getElementById('searchForm');
+                    form.action = '?controller=user&action=search&query=' + encodeURIComponent(lookupValue);
+                }
+            </script>
+
             <?php
             $lookupTerm = isset($_POST['query']) ? $_POST['query'] : '';
             if (!empty($data)) {

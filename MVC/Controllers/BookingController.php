@@ -18,6 +18,14 @@ class BookingController {
             $this->render($controller, $action, $bookings);
         } elseif ($action == "create") {
             $this->render("Booking", $action);
+        } else if ($action == "search") {
+            $bookings = $bookingModel->$action();
+            if (!empty($bookings)) {
+                $bookings = Booking::listByQuery();
+                $this->render("Booking", $action, $bookings); 
+            } else {
+                $this->render("Booking", $action, array());
+            }
         }
     }
 

@@ -131,7 +131,7 @@
                 <!-- Buttons -->
                 <table>
                     <td>
-                        <button type="submit" class="default-button" name="back" onclick="window.history.back();">Back</button>
+                        <button type="button" class="default-button" name="back" onclick="window.history.back();">Back</button>
                     </td>
 
                     <td>
