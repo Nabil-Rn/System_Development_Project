@@ -5,7 +5,6 @@ $isLoggedIn = isset($_SESSION['user']) && !empty($_SESSION['user']);
 // Debugging: Dump the entire user object
 if ($isLoggedIn) {
     var_dump($_SESSION['user']);
-
 } else {
     // User is not logged in
     echo "User is not logged in.";
@@ -41,12 +40,11 @@ if ($isLoggedIn) {
                     <tr>
                         <td class="dropdown">
 
-                            <div class="icon-container"><img class="icon-image" src="assets/profile.png"
-                                    alt="Icon" /> </div>
+                            <div class="icon-container"><img class="icon-image" src="assets/profile.png" alt="Icon" /> </div>
 
                             <div class="dropdown-content">
                                 <a href="?controller=user&action=read">My Profile</a>
-                                <a href="?controller=user&action=logout">Logout</a> 
+                                <a href="?controller=user&action=logout">Logout</a>
                             </div>
                         </td>
                     </tr>

@@ -45,7 +45,7 @@
                                     });
                                 });
 
-                                echo scheduler.id;
+                                
 
                             </script>
                         </td>
@@ -57,27 +57,6 @@
                     </tr>
                 </table>
             </div>
-
-            <div id="target">
-
-            </div>
-
-            <script>
-                // Get reference to the target div
-                const targetDiv = document.getElementById('target');
-
-                // Create an iframe element
-                const iframe = document.createElement('iframe');
-
-                // Set attributes for the iframe
-                iframe.src = 'https://schedule.nylas.com/justbfitness-booking';
-                iframe.width = '10000px'; // Set width as needed
-                iframe.height = '1000px'; // Set height as needed
-                iframe.frameBorder = '0'; // Optional: remove border
-
-                // Append the iframe to the target div
-                targetDiv.appendChild(iframe);
-            </script>
         </div>
     </div>
 
