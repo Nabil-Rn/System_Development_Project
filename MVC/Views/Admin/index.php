@@ -1,7 +1,3 @@
-<?php
-
-//var_dump($_SESSION['user']);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,9 +40,6 @@
                                         },
                                     });
                                 });
-
-                                
-
                             </script>
                         </td>
                         <td>

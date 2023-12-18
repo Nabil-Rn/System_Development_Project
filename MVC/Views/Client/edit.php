@@ -43,21 +43,20 @@
                     <div class="grey-label">Gender</div>
                 </div>
                 <div class="white-box">
-                    <!-- NEED TO RETRIEVE CHECKED ANSWER TO UPDATE THIS VALUE -->
                     <table>
                         <td>
                             <label class="label-input">
-                                <input type="radio" name="gender" value="male" <?php echo ($_SESSION['user']->gender === 'male') ? 'checked' : ''; ?>>Male
+                                <input type="radio" name="gender" value="Male" <?php echo ($_SESSION['user']->gender === 'Male') ? 'checked' : ''; ?>>Male
                             </label>
                         </td>
                         <td>
                             <label class="label-input">
-                                <input type="radio" name="gender" value="female" <?php echo ($_SESSION['user']->gender === 'female') ? 'checked' : ''; ?>>Female
+                                <input type="radio" name="gender" value="Female" <?php echo ($_SESSION['user']->gender === 'Female') ? 'checked' : ''; ?>>Female
                             </label>
                         </td>
                         <td>
                             <label class="label-input">
-                                <input type="radio" name="gender" value="other" <?php echo ($_SESSION['user']->gender === 'other') ? 'checked' : ''; ?>>Prefer to not say
+                                <input type="radio" name="gender" value=""<?php echo ($_SESSION['user']->gender === 'Prefer to not say') ? 'checked' : ''; ?>>Prefer to not say
                             </label>
                         </td>
                     </table>

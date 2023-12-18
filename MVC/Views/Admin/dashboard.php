@@ -37,7 +37,7 @@
     </header>
     <nav class="nav-menu">
         <ul>
-            <li><a href="?controller=user">My Service</a></li>
+            <li><a href="?controller=user">My Services</a></li>
             <li><a href="?controller=user&action=list">Client List</a></li> 
         </ul>
     </nav>

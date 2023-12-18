@@ -11,7 +11,7 @@
 
     <div class="center">
         <div class="profile">
-            <div class="title-header" style="margin-top:100px;">MY PROFILE</div>
+            <div class="title-header">MY PROFILE</div>
 
             <div class="grey-box">
                 <div class="grey-label">First Name</div>
