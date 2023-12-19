@@ -25,8 +25,7 @@
             <div class="form-header">Code:</div>
             <form action='?controller=user&action=confirm' method='post'>
                 <div class="form-group">
-                    <label for="code">Code:</label>
-                    <input type="code" id="code" name="code" required>
+                    <input type="text" id="code" name="code" required>
                 </div>
                 <div class="form-group">
                     <button type="submit">submit</button>
