@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="CSS/home.css">
 </head>
 <body>
-<header>
+
     <?php include_once "dashboard.php"; ?>
-</header>
+
 
     <div class="title">
         <div class="title-text">
@@ -29,15 +29,14 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit">submit</button>
+                    <button type="submit">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <footer>
         <?php include_once 'footer.php' ?>
-    </footer>
+
 </body>
 </html>
 

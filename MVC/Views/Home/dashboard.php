@@ -1,18 +1,3 @@
-<?php
-// Check if the user is logged in
-$isLoggedIn = isset($_SESSION['user']) && !empty($_SESSION['user']);
-
-// Debugging: Dump the entire user object
-if ($isLoggedIn) {
-    var_dump($_SESSION['user']);
-
-} else {
-    // User is not logged in
-    echo "User is not logged in.";
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

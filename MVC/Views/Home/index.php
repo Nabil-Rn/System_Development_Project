@@ -6,13 +6,14 @@
     <title>JUSTBFITNESS</title>
     <link rel="shortcut icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
 <body>
-    <header>
-        <?php include_once "dashboard.php"; ?>
-    </header>
+
+    <?php include_once "dashboard.php"; ?>
+
 
     <div class="title">
         <div class="title-text">Login</div>
@@ -46,8 +47,11 @@
         </form>
     </div>
 
-    <footer>
+    <form method="post" action="?controller=user&action=print">
+        <button type="submit" class="update-button" name="print">Print DB</button>
+    </form>
+
         <?php include_once 'footer.php' ?>
-    </footer>
+
 </body>
 </html>

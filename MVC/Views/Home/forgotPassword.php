@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="CSS/home.css">
 </head>
 <body>
-<header>
+
     <?php include_once "dashboard.php"; ?>
-</header>
+
 
     <div class="title">
         <div class="title-text">
@@ -36,9 +36,9 @@
         </div>
     </div>
 
-    <footer>
+
         <?php include_once 'footer.php' ?>
-    </footer>
+
 </body>
 </html>
 

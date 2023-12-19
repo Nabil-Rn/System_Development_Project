@@ -22,6 +22,7 @@ class User {
     public $height_unit;
     public $additional_note;
     public $group_id;
+    public $database;
 
     public function __construct($id = -1) {
         global $conn;
@@ -41,6 +42,7 @@ class User {
         $this->height_unit = "";
         $this->additional_note = "";
         $this->group_id = -1;
+        $this->database = "justbfitness";
 
         // Load user data if a valid ID is provided
         if ($id > 0) {
@@ -76,6 +78,7 @@ class User {
                 $this->height_unit = $assocUser['height_unit']; 
                 $this->additional_note = $assocUser['additional_note'];
                 $this->group_id = $assocUser['group_id'];
+                $this->database = "justbfitness";
 
                 $stmt->close();
             }
@@ -98,16 +101,16 @@ class User {
             $user->lname = $row['lname'];
             $user->group_id = $row['group_id'];
             $_SESSION['user'] = $user;
-            /* 
-            ATTEMPT FAILED 
+            
+         
             $group_id = $_SESSION['user']->group_id; 
             if ($group_id === 1) {
                 header("Location: ?controller=user&action=index"); 
             } else if ($group_id === 2) {
                 header("Location: ?controller=user"); 
             }
-            */
-            header("Location: ?controller=user"); // ADDED
+            
+            //header("Location: ?controller=user"); // ADDED
         }else{
             $_SESSION['alert'] = "Login unsuccessful. Please try again.";
         }
@@ -692,8 +695,83 @@ public static function deleteClient() {
             include "Views/$controller/$view.php";
         }
     }
+    
+    public function printTables() {
+        global $conn;
+    
+        // Validate the connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        $sql = "SHOW TABLES FROM " . $this->database;
+        $result = $conn->query($sql);
+    
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $tableName = $row["Tables_in_" . $this->database];
+                $tableData = $this->getTableData($tableName);
+    
+                echo "<h3>Table: $tableName</h3>";
+    
+                if (empty($tableData)) {
+                    echo "<p>No data available</p>";
+                } else {
+                    echo "<table border='1'>";
+                    echo "<tr>";
+                    // Display table headers
+                    foreach (array_keys($tableData[0]) as $column) {
+                        echo "<th>$column</th>";
+                    }
+                    echo "</tr>";
+    
+                    // Display table data
+                    foreach ($tableData as $rowData) {
+                        echo "<tr>";
+                        foreach ($rowData as $value) {
+                            echo "<td>$value</td>";
+                        }
+                        echo "</tr>";
+                    }
+    
+                    echo "</table>";
+                }
+    
+                echo "<br>";
+            }
+        } else {
+            echo "<p>No tables found in the database</p>";
+        }
+    
+        $conn->close();
+    }
+    
+    // Move getTableData outside printTables
+    private function getTableData($tableName) {
+        global $conn;
+    
+        // Validate the connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        // Wrap the table name with backticks to handle reserved keywords
+        $sql = "SELECT * FROM `" . $tableName . "`";
+        $result = $conn->query($sql);
+        $tableData = [];
+    
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $tableData[] = $row;
+            }
+        }
+    
+        return $tableData;
+    }
+    
 
 }
+    
 
 ?>
 

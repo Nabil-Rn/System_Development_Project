@@ -98,6 +98,8 @@ class UserController {
             $result = $userModel->$action($id);
         } else if ($action == "logout") {
             $users = User::$action();
+        } else if ($action == "print"){
+            $userModel->printTables();
         } else {
             $user = new User($id);
             if ($_SESSION['user']->group_id == 1) {
