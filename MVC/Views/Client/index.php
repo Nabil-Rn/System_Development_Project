@@ -13,6 +13,40 @@
             <table>
                 <tr>
                     <td>
+                        <div class="title-header">CREATE BOOKINGS</div>
+                    </td>
+                </tr>
+            </table>
+
+            <div id="target">
+
+            </div>
+
+            <script>
+                // Get reference to the target div
+                const targetDiv = document.getElementById('target');
+
+                // Create an iframe element
+                const iframe = document.createElement('iframe');
+
+                // Set attributes for the iframe
+                iframe.src = 'https://schedule.nylas.com/justbfitness-booking';
+                iframe.width = '10000px'; // Set width as needed
+                iframe.height = '1000px'; // Set height as needed
+                iframe.frameBorder = '0'; // Optional: remove border
+
+                // Append the iframe to the target div
+                targetDiv.appendChild(iframe);
+            </script>
+
+        </div>
+    </div>
+    <!--
+    <div class="center">
+        <div class="profile">
+            <table>
+                <tr>
+                    <td>
                         <div class="title-header">MY BOOKINGS</div>
                     </td>
                     <td>
@@ -24,6 +58,7 @@
             </table>
 
             <?php
+            /*
             if (isset($data) && is_array($data) && !empty($data)) {
                 echo '<table>
                         <tr>
@@ -54,9 +89,11 @@
             } else {
                 echo '<div class="null-box"><div class="grey-label">No bookings have been made yet. Please click \'Book Now\' to make a reservation.</div></div>';
             }
+            */
             ?>
         </div>
     </div>
+    -->
     <?php include_once "footer.php"; ?>
 </body>
 

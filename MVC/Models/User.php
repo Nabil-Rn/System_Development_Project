@@ -101,16 +101,16 @@ class User {
             $user->lname = $row['lname'];
             $user->group_id = $row['group_id'];
             $_SESSION['user'] = $user;
-            
-         
+            /*
             $group_id = $_SESSION['user']->group_id; 
             if ($group_id === 1) {
                 header("Location: ?controller=user&action=index"); 
             } else if ($group_id === 2) {
                 header("Location: ?controller=user"); 
             }
+            */
             
-            //header("Location: ?controller=user"); // ADDED
+            header("Location: ?controller=user"); // ADDED
         }else{
             $_SESSION['alert'] = "Login unsuccessful. Please try again.";
         }

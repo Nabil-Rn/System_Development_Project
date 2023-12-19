@@ -6,7 +6,6 @@
     <title>JUSTBFITNESS</title>
     <link rel="shortcut icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="CSS/home.css">
-    <link rel="stylesheet" href="CSS/view.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
 </head>
@@ -48,8 +47,11 @@
     </div>
 
     <form method="post" action="?controller=user&action=print">
-        <button type="submit" class="update-button" name="print">Print DB</button>
+    <button type="submit" style="border-color: #35DC50; border-radius: 5px; cursor: pointer; text-align: center; text-transform: uppercase; justify-content: center; background: #35DC50; color: white; font-family: 'Montserrat', sans-serif; font-weight: bolder; font-size: 12px; padding: 10px;">
+        Print DB
+    </button>
     </form>
+
 
         <?php include_once 'footer.php' ?>
 
