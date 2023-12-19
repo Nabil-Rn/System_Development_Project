@@ -12,7 +12,7 @@ class User {
     public $fname;
     public $lname;
     public $email;
-    public $password; // This should be a hashed password
+    public $password;
     public $phone;
     public $age;
     public $gender;
@@ -82,11 +82,10 @@ class User {
         }
     }
 
-
     public static function login() {
         global $conn;
         $sql = "SELECT * FROM user WHERE email = '". $_POST['email'] . "' ";
-        var_dump($sql);
+        //var_dump($sql);
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         
@@ -99,12 +98,21 @@ class User {
             $user->lname = $row['lname'];
             $user->group_id = $row['group_id'];
             $_SESSION['user'] = $user;
+            /* 
+            ATTEMPT FAILED 
+            $group_id = $_SESSION['user']->group_id; 
+            if ($group_id === 1) {
+                header("Location: ?controller=user&action=index"); 
+            } else if ($group_id === 2) {
+                header("Location: ?controller=user"); 
+            }
+            */
             header("Location: ?controller=user"); // ADDED
         }else{
             $_SESSION['alert'] = "Login unsuccessful. Please try again.";
         }
     }
-
+    
   
     public function register($firstName, $lastName, $phone, $email, $password, $confirmPassword, $groupId = 1) {
         global $conn;
@@ -582,14 +590,61 @@ public static function delete() {
         header("Pragma: no-cache");
         header("Expires: 0");
 
+        // Set additional headers to prevent caching
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+
         // Redirect to the home page after successful account deletion
-        header('Location: index.php?controller=home');
+        header('Location: ?controller=home');
         exit();
     }
 
     // Return false if the 'deleteAccount' key is not present in the $_POST array
     return false;
 }
+
+public static function deleteClient() {
+    global $conn;
+
+    $userId = isset($_POST['user_id']) ? (int)$_POST['user_id'] : null;
+
+    // Check if the 'delete' key is present in the $_POST array
+    if (isset($_POST['deleteClient'])) {
+        // Validate user ID
+        if (!$userId) {
+            die('Error: User ID not available. Please log in.');
+        }
+
+        // Prepare and execute the SQL query to delete the user account
+        $sql = 'DELETE FROM `user` WHERE `user_id` = ?';
+        $stmt = $conn->prepare($sql);
+
+        // Check for errors in preparing the statement
+        if (!$stmt) {
+            die('Error preparing statement: ' . $conn->error);
+        }
+
+        // Bind parameters and execute the statement
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+
+        // Check for errors in executing the statement
+        if ($stmt->error) {
+            // Handle the error (e.g., display an error message or redirect to an error page)
+            die('Error executing statement: ' . $stmt->error);
+        }
+
+        // Redirect to the home page after successful account deletion
+        header('Location: ?controller=user&action=list');
+        exit();
+    }
+
+    // Return false if the 'delete' key is not present in the $_POST array
+    return false;
+}
+
 
 
     //REVIEW LATER...NEED TO REVIEW/UPDATE DB DEPENDING ON OUR ACTION NAMES

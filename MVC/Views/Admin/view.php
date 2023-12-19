@@ -131,9 +131,9 @@
             <table>
                 <tr>
                     <td>
-                        <form method="post" action="?controller=user&action=delete">
+                        <form method="post" action="?controller=user&action=deleteClient">
                             <input type="hidden" name="user_id" value="<?php echo isset($user->user_id) ? htmlspecialchars($user->user_id) : ''; ?>">
-                            <button type="submit" class="confirm-button" style="margin-left: 30px;" name="delete">Yes</button>
+                            <button type="submit" class="confirm-button" style="margin-left: 30px;" name="deleteClient">Yes</button>
                         </form>
                     </td>
                     <td>

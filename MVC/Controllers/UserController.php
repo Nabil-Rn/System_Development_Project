@@ -90,7 +90,7 @@ class UserController {
             } else if ($_SESSION['user']->group_id == 2) {
                 $this->render("Admin", $action, ['user' => $user]);
             }
-        } else if ($action == "update" || $action == "delete") {
+        } else if ($action == "update" || $action == "delete" || $action == "deleteClient") {
             $result = $userModel->$action($id);
         } else if ($action == "logout") {
             $users = User::$action();
