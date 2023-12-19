@@ -18,6 +18,14 @@
     </div>
     <div class="all-container">
 
+    <?php
+                    // Display error message if it exists in the data array
+                    if (isset($data['error'])) {
+                        $errorMessage = $data['error'];
+                        echo '<div style="color: red;">' . $errorMessage . '</div>';
+                    }
+                ?>
+
         <div class="forgot-password-instructions">
             Please enter your new password with your account.
         </div>

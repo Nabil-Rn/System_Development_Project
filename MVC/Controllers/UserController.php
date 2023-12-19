@@ -70,8 +70,14 @@ class UserController {
                 }
         }else if ($action == "changepassword") {
             $password = $_POST['password'];
-            $users = User::changePassword( $password);
-            header("Location: ?controller=home");
+            $passwordValidationResult = $this->validatePassword($password);
+            if ($passwordValidationResult === true) {
+                $users = User::changePassword( $password);
+                header("Location: ?controller=home");
+            }else {
+                // Password validation failed
+                $this->render("Home", "changePassword", array('error' => $passwordValidationResult));
+            }
 
         }else if ($action == "list") {
             if ($_SESSION['user']->group_id == 2) {
