@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password - JUSTBFITNESS</title>
+    <title>Code - JUSTBFITNESS</title>
     <link rel="stylesheet" href="CSS/home.css">
 </head>
 <body>
@@ -19,18 +19,17 @@
     <div class="all-container">
 
         <div class="forgot-password-instructions">
-            Please enter the email address associated with your account.<br>
-            You will receive an email message with a code to enter here.
+            Please enter code!.
         </div>
         <div class="all-form">
-            <div class="form-header">Reset Password:</div>
-            <form action='?controller=user&action=forgotpassword' method='post'>
+            <div class="form-header">Code:</div>
+            <form action='?controller=user&action=confirm' method='post'>
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="code">Code:</label>
+                    <input type="code" id="code" name="code" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit">Get Code</button>
+                    <button type="submit">submit</button>
                 </div>
             </form>
         </div>

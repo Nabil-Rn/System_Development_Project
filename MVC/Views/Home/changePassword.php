@@ -19,18 +19,17 @@
     <div class="all-container">
 
         <div class="forgot-password-instructions">
-            Please enter the email address associated with your account.<br>
-            You will receive an email message with a code to enter here.
+            Please enter your new password with your account.
         </div>
         <div class="all-form">
-            <div class="form-header">Reset Password:</div>
-            <form action='?controller=user&action=forgotpassword' method='post'>
+            <div class="form-header">Create your new Password:</div>
+            <form action='?controller=user&action=changepassword' method='post'>
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="password">New password:</label>
+                    <input type="password" id="password" name="password" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit">Get Code</button>
+                    <button type="submit">submit</button>
                 </div>
             </form>
         </div>

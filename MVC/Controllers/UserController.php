@@ -54,7 +54,22 @@ class UserController {
                 // Show registration form
                 $this->render("User", "register");
             }
-        } else if ($action == "list") {
+        } else if ($action == "forgotpassword") {
+                $email = $_POST['email'];
+                $users = User::sendEmail( $email);
+                $this->render("Home", "confirmCode");
+
+        }else if ($action == "confirm") {
+            $code = $_POST['code'];
+            $users = User::confirmCode( $password);
+            $this->render("Home", "changePassword");
+
+        }else if ($action == "changepassword") {
+            $password = $_POST['password'];
+            $users = User::changePassword( $password);
+            header("Location: ?controller=home");
+
+        }else if ($action == "list") {
             if ($_SESSION['user']->group_id == 2) {
                 $users = User::$action();
                 $this->render("Admin", $action, $users);

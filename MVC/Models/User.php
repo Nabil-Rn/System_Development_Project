@@ -1,5 +1,9 @@
 <?php
-
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    require 'vendor/phpmailer/phpmailer/src/Exception.php';
+    require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+    require 'vendor/phpmailer/phpmailer/src/SMTP.php';
     include_once "mysqldatabase.php";
 
 class User {
@@ -82,6 +86,7 @@ class User {
     public static function login() {
         global $conn;
         $sql = "SELECT * FROM user WHERE email = '". $_POST['email'] . "' ";
+        var_dump($sql);
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         
@@ -176,6 +181,85 @@ class User {
         
     }
 
+    public static function generateRandomCode($length = 6) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $code = '';
+        for ($i = 0; $i < $length; $i++) {
+            $code .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $code;
+    }
+
+    public static function sendEmail( $email){
+        $mail = new PHPMailer(true);
+        $_SESSION['randomCode'] = self::generateRandomCode();
+        $_SESSION['email'] = $email;
+        try {
+            //Server settings
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'duckdolphin1@gmail.com';
+            $mail->Password   = 'nxdwnindksrmhdiq';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
+
+            //Recipient
+            $mail->setFrom('JUSTBFITNESS@gmail.com', 'JUSTBFITNESS');
+            $mail->addAddress($email);
+
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Confirmation Code!';
+            $mail->Body    = 'Your confirmation code is: ' . $_SESSION['randomCode'];
+
+            $mail->send();
+            echo "<script> alert('Email sent successfully'); </script>";
+        } catch (Exception $e) {
+            echo "Error: {$mail->ErrorInfo}";
+        }
+
+
+    }
+
+    public static function confirmCode(){
+        $enteredCode = $_POST['code'];
+
+        if ($enteredCode == $_SESSION['randomCode']) {
+            echo "<script>alert('Code is valid. Email confirmed!');</script>";
+            unset($_SESSION['randomCode']);
+            return true;
+        } else {
+            // Code is incorrect
+            echo "<script>alert('Invalid code. Please try again.');</script>";
+            return false;
+        }
+    }
+
+    public static function changePassword($password){
+        global $conn;
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $email = $_SESSION['email'];
+
+        $sql = 'UPDATE `user` SET password = ? WHERE email = ?';
+        $stmt = $conn->prepare($sql);
+
+        // Check if the prepared statement was successful
+        if (!$stmt) {
+            return 0;
+        }
+
+        $stmt->bind_param('ss',$hashedPassword, $email);
+        $stmt->execute();
+
+        if ($stmt->errno) {
+            $stmt->close();
+            return 0;
+        }
+
+        $stmt->close();
+    }
+    
     public static function search(){
         global $conn;
 
