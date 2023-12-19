@@ -61,9 +61,13 @@ class UserController {
 
         }else if ($action == "confirm") {
             $code = $_POST['code'];
-            $users = User::confirmCode( $password);
-            $this->render("Home", "changePassword");
-
+            $confim = User::confirmCode( $code);
+                $confirm = User::confirmCode($code);
+                if ($confirm == true) {
+                    $this->render("Home", "changePassword");
+                }else{
+                    $this->render("Home", "confirmCode");
+                }
         }else if ($action == "changepassword") {
             $password = $_POST['password'];
             $users = User::changePassword( $password);

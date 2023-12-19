@@ -235,11 +235,9 @@ class User {
 
         if ($enteredCode == $_SESSION['randomCode']) {
             echo "<script>alert('Code is valid. Email confirmed!');</script>";
-            unset($_SESSION['randomCode']);
             return true;
         } else {
             // Code is incorrect
-            echo "<script>alert('Invalid code. Please try again.');</script>";
             return false;
         }
     }
